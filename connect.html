@@ -39,70 +39,29 @@
             padding: 20px;
         }
 
-        .chat-container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .chat-header {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .chat-messages {
-            height: 300px;
-            overflow-y: scroll;
-            padding: 10px;
-        }
-
-        .message {
-            margin-bottom: 10px;
-        }
-
-        .user-message {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 8px;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-
-        .other-message {
-            background-color: #eee;
-            padding: 8px;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .message-input {
+        .connect-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-top: 1px solid #ddd;
+            flex-wrap: wrap;
         }
 
-        .message-input input {
-            flex: 1;
-            padding: 8px;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .connect-card {
+            width: 30%;
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .message-input button {
-            background-color: #4CAF50;
+        footer {
+            background-color: #333;
             color: #fff;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -122,20 +81,29 @@
     </nav>
 
     <section>
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>Chat with Friends</h2>
+        <h2>Connect with Others</h2>
+        
+        <div class="connect-container">
+            <!-- Connect cards (similar to Facebook) -->
+            <div class="connect-card">
+                <h3>User 1</h3>
+                <p>Connect with User 1</p>
+                <!-- Add more details or buttons as needed -->
             </div>
-            <div class="chat-messages">
-                <!-- Chat messages will be displayed here -->
-                <div class="message user-message">Hello, how are you?</div>
-                <div class="message other-message">Hi! I'm good, thanks for asking.</div>
-                <!-- Add more messages as needed -->
+
+            <div class="connect-card">
+                <h3>User 2</h3>
+                <p>Connect with User 2</p>
+                <!-- Add more details or buttons as needed -->
             </div>
-            <div class="message-input">
-                <input type="text" placeholder="Type your message...">
-                <button>Send</button>
+
+            <div class="connect-card">
+                <h3>User 3</h3>
+                <p>Connect with User 3</p>
+                <!-- Add more details or buttons as needed -->
             </div>
+
+            <!-- Add more connect cards as needed -->
         </div>
     </section>
 
