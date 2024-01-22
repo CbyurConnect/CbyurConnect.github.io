@@ -3,50 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CbyurConnect - About</title>
+    <title>CbyurConnect</title>
     <style>
-        /* Add your CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
+        /* ... (Previous styles) ... */
+
+        .about-container {
+            margin: 20px 0;
         }
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #666;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 10px;
+        .about-content {
+            background-color: #fff;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #444;
-        }
-
-        section {
             padding: 20px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -57,34 +27,41 @@
     </header>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="connect.html">Connect</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="login.html">Log In</a>
-        <a href="signup.html">Sign Up</a>
+        <a href="#">Home</a>
+        <a href="#">Status</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
     </nav>
 
-    <section>
-        <h2>About CbyurConnect</h2>
-        
-        <p>Welcome to CbyurConnect, a social networking platform that connects people from all around the world. Our mission is to provide a space for individuals to connect, share, and engage in meaningful conversations.</p>
+    <section class="container">
+        <h2>Welcome to CbyurConnect!</h2>
+        <p>Be happy with your friends and family.</p>
 
-        <p>Key features of CbyurConnect:</p>
-        <ul>
-            <li>Connect with friends and family</li>
-            <li>Share updates and photos</li>
-            <li>Discover new connections based on your interests</li>
-            <li>Engage in discussions and join communities</li>
-        </ul>
+        <!-- Add your content here -->
 
-        <p>At CbyurConnect, we prioritize user privacy and security. Your data is important to us, and we strive to create a safe and enjoyable environment for everyone.</p>
+        <div class="status-container">
+            <h2>Status</h2>
+            <div class="status-card">
+                <div class="status-avatar">A</div>
+                <div class="status-text">Feeling happy today! 😊</div>
+            </div>
+            <div class="status-card">
+                <div class="status-avatar">B</div>
+                <div class="status-text">Busy with work. 🚀</div>
+            </div>
+        </div>
 
-        <p>Join us on this journey of connection and discovery!</p>
+        <div class="about-container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <p>CbyurConnect is a platform that connects people and allows them to communicate in a seamless manner. Our mission is to provide a user-friendly experience for staying connected with friends and family.</p>
+                <p>Feel free to explore our features, share your status, and enjoy chatting with others. We value your privacy and strive to create a positive online community.</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        &copy; 2024 CbyurConnect. All rights reserved.
+        <p>&copy; 2024 CbyurConnect. All rights reserved.</p>
     </footer>
 
 </body>
