@@ -3,110 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CbyurConnect - Connect</title>
+    <title>Connect - CbyurConnect</title>
     <style>
-        /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            box-sizing: border-box;
         }
-
         header {
             background-color: #333;
             color: #fff;
             padding: 10px;
             text-align: center;
         }
-
         nav {
-            background-color: #666;
+            display: flex;
+            justify-content: center;
+            background-color: #ddd;
             padding: 10px;
-            text-align: center;
         }
-
         nav a {
-            color: #fff;
+            margin: 0 15px;
             text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 5px;
-            background-color: #444;
+            color: #333;
+            font-weight: bold;
         }
-
         section {
             padding: 20px;
         }
-
-        .connect-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .connect-card {
-            width: 30%;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 10px;
-            position: fixed;
+            position: absolute;
             bottom: 0;
             width: 100%;
+        }
+        #chat-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #message-input {
+            width: 80%;
+            padding: 5px;
+        }
+        #send-button {
+            padding: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
     <header>
         <h1>CbyurConnect</h1>
     </header>
-
     <nav>
-        <a href="home.html">Home</a>
-        <a href="connect.html">Connect</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
-        <a href="login.html">Log In</a>
+        <a href="connect.html">Connect</a>
         <a href="signup.html">Sign Up</a>
+        <a href="login.html">Log In</a>
     </nav>
-
     <section>
         <h2>Connect with Others</h2>
-        
-        <div class="connect-container">
-            <!-- Placeholder for server-side code to fetch and display user data -->
-            <!-- Example: Using PHP to fetch user data from a database -->
-            <?php
-                // Assume $users is an array of user data fetched from a database
-                $users = array(
-                    array('id' => 1, 'username' => 'User1'),
-                    array('id' => 2, 'username' => 'User2'),
-                    array('id' => 3, 'username' => 'User3')
-                );
-
-                foreach ($users as $user) {
-                    echo '<div class="connect-card">';
-                    echo '<h3>' . $user['username'] . '</h3>';
-                    echo '<p>Connect with ' . $user['username'] . '</p>';
-                    // Add more details or buttons as needed
-                    echo '</div>';
-                }
-            ?>
+        <div id="chat-container"></div>
+        <div>
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button" onclick="sendMessage()">Send</button>
         </div>
     </section>
-
     <footer>
         &copy; 2024 CbyurConnect. All rights reserved.
     </footer>
 
+    <script>
+        function sendMessage() {
+            var messageInput = document.getElementById("message-input");
+            var message = messageInput.value;
+
+            if (message.trim() !== "") {
+                var chatContainer = document.getElementById("chat-container");
+                var newMessage = document.createElement("p");
+                newMessage.textContent = message;
+                chatContainer.appendChild(newMessage);
+
+                // Clear the input field
+                messageInput.value = "";
+
+                // Scroll to the bottom of the chat container
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+    </script>
 </body>
 </html>
