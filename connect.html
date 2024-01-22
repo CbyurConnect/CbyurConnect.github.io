@@ -105,6 +105,7 @@
                 <!-- Messages will be displayed here -->
             </div>
 
+            <input type="text" id="usernameInput" placeholder="Your Username">
             <input type="text" id="messageInput" placeholder="Type your message">
             <button onclick="sendMessage()">Send</button>
         </div>
@@ -122,27 +123,31 @@
 
         // Function to send a message
         function sendMessage() {
+            const usernameInput = document.getElementById('usernameInput');
             const messageInput = document.getElementById('messageInput');
+
+            const username = usernameInput.value;
             const message = messageInput.value;
 
-            // Emit the message to the server
-            socket.emit('chat message', message);
+            // Emit the message with the username to the server
+            socket.emit('chat message', { username, message });
 
-            // Clear the input field
+            // Clear the input fields
+            usernameInput.value = '';
             messageInput.value = '';
         }
 
         // Function to append a received message to the message box
-        function appendMessage(message) {
+        function appendMessage(data) {
             const messageBox = document.getElementById('messageBox');
             const newMessage = document.createElement('p');
-            newMessage.textContent = message;
+            newMessage.textContent = `${data.username}: ${data.message}`;
             messageBox.appendChild(newMessage);
         }
 
         // Listen for incoming messages from the server
-        socket.on('chat message', function(message) {
-            appendMessage(message);
+        socket.on('chat message', function(data) {
+            appendMessage(data);
         });
     </script>
 </body>
