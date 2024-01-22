@@ -9,20 +9,27 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
 
         header {
-            background-color: #25d366;
-            color: white;
-            text-align: center;
+            background-color: #333;
+            color: #fff;
             padding: 10px;
+            text-align: center;
         }
 
         nav {
-            background-color: #128C7E;
-            color: white;
-            text-align: center;
+            background-color: #444;
             padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 5px;
         }
 
         section {
@@ -30,47 +37,13 @@
         }
 
         footer {
-            background-color: #128C7E;
-            color: white;
+            background-color: #333;
+            color: #fff;
             text-align: center;
             padding: 10px;
             position: fixed;
             bottom: 0;
             width: 100%;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            text-decoration: none;
-            background-color: #25d366;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .status {
-            font-style: italic;
-            color: #128C7E;
-        }
-
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .message {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
         }
     </style>
 </head>
@@ -82,26 +55,22 @@
 
     <nav>
         <a href="index.html">Home</a>
-        <a href="connect.html">Status</a>
+        <a href="connect.html">Connect</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Log In</a>
     </nav>
 
-    <section class="container">
-        <h2>Welcome to CbyurConnect!</h2>
-        <p>This is a simple template for your website. You can customize and add more features as needed.</p>
-
-        <!-- Add your content here -->
-
-        <div class="chat-container">
-            <div class="message">Hello, how are you?</div>
-            <div class="message">I'm good, thanks!</div>
-        </div>
+    <section>
+        <!-- Your content goes here -->
+        <p>Welcome to CbyurConnect! This is a multiuser platform.</p>
     </section>
 
     <footer>
-        <p>&copy; 2024 CbyurConnect. All rights reserved.</p>
+        &copy; 2024 CbyurConnect. All rights reserved.
     </footer>
 
 </body>
 </html>
+
