@@ -48,8 +48,13 @@
             overflow-y: auto;
         }
         #message-input {
-            width: 80%;
+            width: 70%;
             padding: 5px;
+            margin-bottom: 10px;
+        }
+        #image-input {
+            width: 70%;
+            margin-bottom: 10px;
         }
         #send-button {
             padding: 5px;
@@ -73,6 +78,7 @@
         <div id="chat-container"></div>
         <div>
             <input type="text" id="message-input" placeholder="Type your message...">
+            <input type="file" id="image-input" accept="image/*">
             <button id="send-button" onclick="sendMessage()">Send</button>
         </div>
     </section>
@@ -83,16 +89,36 @@
     <script>
         function sendMessage() {
             var messageInput = document.getElementById("message-input");
+            var imageInput = document.getElementById("image-input");
             var message = messageInput.value;
+            var image = imageInput.files[0];
 
-            if (message.trim() !== "") {
+            if (message.trim() !== "" || image) {
                 var chatContainer = document.getElementById("chat-container");
-                var newMessage = document.createElement("p");
-                newMessage.textContent = message;
+
+                // Create a new message element
+                var newMessage = document.createElement("div");
+
+                // Display text message
+                var textMessage = document.createElement("p");
+                textMessage.textContent = message;
+                newMessage.appendChild(textMessage);
+
+                // Display image
+                if (image) {
+                    var imageElement = document.createElement("img");
+                    imageElement.src = URL.createObjectURL(image);
+                    imageElement.alt = "User Image";
+                    imageElement.style.maxWidth = "100%";
+                    newMessage.appendChild(imageElement);
+                }
+
+                // Add message to the chat container
                 chatContainer.appendChild(newMessage);
 
-                // Clear the input field
+                // Clear the input fields
                 messageInput.value = "";
+                imageInput.value = "";
 
                 // Scroll to the bottom of the chat container
                 chatContainer.scrollTop = chatContainer.scrollHeight;
