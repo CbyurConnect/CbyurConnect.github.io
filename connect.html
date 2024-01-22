@@ -39,16 +39,16 @@
             padding: 20px;
         }
 
-        .post-container {
+        .connect-container {
             display: flex;
             flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .post {
+        .connect-card {
             width: 30%;
-            margin: 10px;
-            padding: 15px;
             background-color: #fff;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -82,20 +82,25 @@
     <section>
         <h2>Connect with Others</h2>
         
-        <div class="post-container">
-            <!-- Post 1 -->
-            <div class="post">
-                <img src="image1.jpg" alt="Image 1">
-                <p>This is a sample text post.</p>
-            </div>
+        <div class="connect-container">
+            <!-- Placeholder for server-side code to fetch and display user data -->
+            <!-- Example: Using PHP to fetch user data from a database -->
+            <?php
+                // Assume $users is an array of user data fetched from a database
+                $users = array(
+                    array('id' => 1, 'username' => 'User1'),
+                    array('id' => 2, 'username' => 'User2'),
+                    array('id' => 3, 'username' => 'User3')
+                );
 
-            <!-- Post 2 -->
-            <div class="post">
-                <img src="image2.jpg" alt="Image 2">
-                <p>Another text post for demonstration.</p>
-            </div>
-
-            <!-- Add more posts as needed -->
+                foreach ($users as $user) {
+                    echo '<div class="connect-card">';
+                    echo '<h3>' . $user['username'] . '</h3>';
+                    echo '<p>Connect with ' . $user['username'] . '</p>';
+                    // Add more details or buttons as needed
+                    echo '</div>';
+                }
+            ?>
         </div>
     </section>
 
