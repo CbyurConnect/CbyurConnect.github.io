@@ -6,39 +6,74 @@
     <title>CzenConnect Browser</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #1b1b1b;
+            color: #fff;
         }
         header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
+            background-color: #222;
+            color: #ff3333;
+            padding: 15px;
             text-align: center;
+            font-size: 24px;
+            animation: flash 2s infinite alternate;
         }
         nav {
-            background-color: #444;
+            background-color: #333;
             padding: 10px;
             text-align: center;
         }
         nav input, nav button {
             padding: 8px;
             margin: 0 5px;
+            font-size: 16px;
+        }
+        nav button {
+            background-color: #ff3333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        nav button:hover {
+            background-color: #ff6666;
         }
         section {
             padding: 20px;
         }
-        footer {
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            animation: flash 0.5s;
+        }
+        #websiteDetails {
+            margin-top: 20px;
+            padding: 15px;
             background-color: #333;
-            color: #fff;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #222;
+            color: #ff3333;
             text-align: center;
-            padding: 10px;
+            padding: 15px;
             position: fixed;
             bottom: 0;
             width: 100%;
         }
         footer p {
             margin: 0;
+        }
+        @keyframes flash {
+            from {
+                opacity: 0.7;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -58,16 +93,13 @@
         <button onclick="openPage('contact.html')">Contact</button>
         <button onclick="openPage('login.html')">Login</button>
         <button onclick="openPage('signup.html')">Signup</button>
+        <!-- More buttons can be added here if needed -->
+
     </nav>
 
     <section>
-        <iframe id="browserFrame" width="100%" height="500px" src="https://czengpt.github.io" frameborder="0"></iframe>
-        <div id="websiteDetails">
-            <!-- Details of all websites go here -->
-            <h2>Websites:</h2>
-            <p>CzenGPT - A website for ChatGPT experimentation.</p>
-            <!-- Add details for other websites here -->
-        </div>
+        <iframe id="browserFrame" src="" frameborder="0"></iframe>
+        <div id="websiteDetails"></div>
     </section>
 
     <footer>
@@ -76,287 +108,283 @@
 
     <script>
         const searchEngine = {
-            const searchEngine = {
-    'CzenGPT': {
-        url: 'https://czengpt.github.io',
-        description: 'CzenGPT - A website for ChatGPT experimentation.',
-    },
-    'Syrancia': {
-        url: 'https://syrancia.unaux.com/',
-        description: 'Syrancia - A platform for creative exploration and expression.',
-    },
-    'Google': {
-        url: 'https://www.google.com',
-        description: 'Google - A search engine and technology company.',
-    },
-    'OpenAI': {
-        url: 'https://www.openai.com',
-        description: 'OpenAI - An artificial intelligence research laboratory.',
-    },
-    'Microsoft': {
-        url: 'https://www.microsoft.com',
-        description: 'Microsoft - A multinational technology company.',
-    },
-    'ChatGPT': {
-        url: 'https://www.chatgpt.com',
-        description: 'ChatGPT - Conversational AI powered by OpenAI.',
-    },
-    'Youtube': {
-        url: 'https://www.youtube.com',
-        description: 'YouTube - A video-sharing platform.',
-    },
-    'Facebook': {
-        url: 'https://www.facebook.com',
-        description: 'Facebook - A social media platform.',
-    },
-    'Twitter': {
-        url: 'https://twitter.com',
-        description: 'Twitter - A microblogging and social networking service.',
-    },
-    'Instagram': {
-        url: 'https://www.instagram.com',
-        description: 'Instagram - A photo and video-sharing social networking service.',
-    },
-    'GoDaddy': {
-        url: 'https://www.godaddy.com',
-        description: 'GoDaddy - A domain registrar and web hosting company.',
-    },
-    'WhatsApp': {
-        url: 'https://www.whatsapp.com',
-        description: 'WhatsApp - A messaging app owned by Facebook.',
-    },
-    'Wikipedia': {
-        url: 'https://www.wikipedia.org',
-        description: 'Wikipedia - A free online encyclopedia.',
-    },
-    'Wikiwand': {
-        url: 'https://www.wikiwand.com',
-        description: 'Wikiwand - A modern reader for web content.',
-    },
-    'Bing': {
-        url: 'https://www.bing.com',
-        description: 'Bing - A web search engine owned by Microsoft.',
-    },
-    'Apple': {
-        url: 'https://www.apple.com',
-        description: 'Apple - A technology company that designs and sells consumer electronics.',
-    },
-    'Netflix': {
-        url: 'https://www.netflix.com',
-        description: 'Netflix - A streaming service for movies and TV shows.',
-    },
-    'Amazon': {
-        url: 'https://www.amazon.com',
-        description: 'Amazon - An e-commerce and technology company.',
-    },
-    'Flipkart': {
-        url: 'https://www.flipkart.com',
-        description: 'Flipkart - An Indian e-commerce company.',
-    },
-    'Myntra': {
-        url: 'https://www.myntra.com',
-        description: 'Myntra - An Indian fashion e-commerce platform.',
-    },
-    'Snapdeal': {
-        url: 'https://www.snapdeal.com',
-        description: 'Snapdeal - An Indian online marketplace.',
-    },
-    'Wordpress': {
-        url: 'https://wordpress.org',
-        description: 'WordPress - An open-source content management system.',
-    },
-    'Oxford': {
-        url: 'https://www.ox.ac.uk',
-        description: 'University of Oxford - A prestigious university in the UK.',
-    },
-    'Tata': {
-        url: 'https://www.tata.com',
-        description: 'Tata Group - An Indian multinational conglomerate.',
-    },
-    'Jio': {
-        url: 'https://www.jio.com',
-        description: 'Jio - An Indian telecommunications company.',
-    },
-    'Airtel': {
-        url: 'https://www.airtel.in',
-        description: 'Airtel - An Indian telecommunications company.',
-    },
-    'Mahindra': {
-        url: 'https://www.mahindra.com',
-        description: 'Mahindra Group - An Indian multinational conglomerate.',
-    },
-    'Britannia': {
-        url: 'https://www.britannia.co.in',
-        description: 'Britannia Industries - An Indian food-products corporation.',
-    },
-    'Cambridge': {
-        url: 'https://www.cam.ac.uk',
-        description: 'University of Cambridge - A prestigious university in the UK.',
-    },
-    'Tesla': {
-        url: 'https://www.tesla.com',
-        description: 'Tesla - Electric cars, solar, and clean energy.',
-    },
-    'Infosys': {
-        url: 'https://www.infosys.com',
-        description: 'Infosys - IT consulting and services company.',
-    },
-    'Reliance': {
-        url: 'https://www.ril.com',
-        description: 'Reliance Industries - A conglomerate with interests in petrochemicals, refining, oil, and gas exploration.',
-    },
-    'TCS': {
-        url: 'https://www.tcs.com',
-        description: 'Tata Consultancy Services - IT services and consulting.',
-    },
-    'LIC': {
-        url: 'https://www.licindia.in',
-        description: 'Life Insurance Corporation of India - Insurance and investment company.',
-    },
-    'BPCL': {
-        url: 'https://www.bharatpetroleum.in',
-        description: 'Bharat Petroleum Corporation Limited - Oil and gas company.',
-    },
-    'Wipro': {
-        url: 'https://www.wipro.com',
-        description: 'Wipro - IT, consulting, and business process services.',
-    },
-    'Suzuki': {
-        url: 'https://www.suzuki.com',
-        description: 'Suzuki Motor Corporation - Automobile manufacturer.',
-    },
-    'Apple': {
-        url: 'https://www.apple.com',
-        description: 'Apple - A technology company that designs and sells consumer electronics.',
-    },
-    'Alphabet': {
-        url: 'https://abc.xyz',
-        description: 'Alphabet Inc. - The parent company of Google.',
-    },
-    'Oppo': {
-        url: 'https://www.oppo.com',
-        description: 'Oppo - Consumer electronics and mobile communications company.',
-    },
-    'BBK Electronics': {
-        url: 'https://www.bbk.com',
-        description: 'BBK Electronics - Parent company of Oppo, Vivo, Realme, and OnePlus.',
-    },
-    'Vivo': {
-        url: 'https://www.vivo.com',
-        description: 'Vivo - Smartphone manufacturer.',
-    },
-    'Realme': {
-        url: 'https://www.realme.com',
-        description: 'Realme - Smartphone manufacturer.',
-    },
-    'Xiaomi': {
-        url: 'https://www.mi.com',
-        description: 'Xiaomi - Consumer electronics and software company.',
-    },
-    'OnePlus': {
-        url: 'https://www.oneplus.com',
-        description: 'OnePlus - Smartphone manufacturer.',
-    },
-    'Huawei': {
-        url: 'https://www.huawei.com',
-        description: 'Huawei - Technology company providing telecommunications equipment and consumer electronics.',
-    },
-    'Samsung': {
-        url: 'https://www.samsung.com',
-        description: 'Samsung - Electronics and technology company.',
-    },
-    'Honor': {
-        url: 'https://www.hihonor.com',
-        description: 'Honor - Smartphone brand.',
-    },
-    'Kookaburra': {
-        url: 'https://www.kookaburra.biz',
-        description: 'Kookaburra - Cricket equipment manufacturer.',
-    },
-    'Sanspareils Greenlands (SG)': {
-        url: 'https://www.sanspareilsgreenlands.com',
-        description: 'SG - Sanspareils Greenlands - Cricket equipment manufacturer.',
-    },
-    'Dukes': {
-        url: 'https://www.dukesindia.com',
-        description: 'Dukes - Cricket and sports equipment manufacturer.',
-    },
-    'Krafton': {
-        url: 'https://www.krafton.com',
-        description: 'Krafton - Video game developer and publisher.',
-    },
-    'Garena': {
-        url: 'https://www.garena.sg',
-        description: 'Garena - Digital entertainment platform.',
-    },
-    'Duolingo': {
-        url: 'https://www.duolingo.com',
-        description: 'Duolingo - Language-learning platform.',
-    },
-    'Canva': {
-        url: 'https://www.canva.com',
-        description: 'Canva - Graphic design platform.',
-    },
-    'G-mail': {
-        url: 'https://mail.google.com',
-        description: 'Gmail - Email service by Google.',
-    },
-    'Dream11': {
-        url: 'https://www.dream11.com',
-        description: 'Dream11 - Fantasy sports platform.',
-    },
-    'My11Circle': {
-        url: 'https://www.my11circle.com',
-        description: 'My11Circle - Fantasy sports platform.',
-    },
-    'Telegram': {
-        url: 'https://telegram.org',
-        description: 'Telegram - Messaging app.',
-    },
-    'Skype': {
-        url: 'https://www.skype.com',
-        description: 'Skype - Communication platform.',
-    },
-    'Disney': {
-        url: 'https://www.disney.com',
-        description: 'Disney - Entertainment and media conglomerate.',
-    },
-    'PrimeVideo': {
-        url: 'https://www.amazon.com/Prime-Video',
-        description: 'Amazon Prime Video - Streaming service for movies and TV shows.',
-    },
-    'AltBalaji': {
-        url: 'https://www.altbalaji.com',
-        description: 'AltBalaji - Indian subscription-based video-on-demand platform.',
-    },
-    'MxPlayer': {
-        url: 'https://www.mxplayer.in',
-        description: 'MX Player - Indian video streaming and on-demand platform.',
-    },
-    'TikTok': {
-        url: 'https://www.tiktok.com',
-        description: 'TikTok - Social media platform for creating and sharing short videos.',
-    },
-    'MxTakaTak': {
-        url: 'https://www.mxtakatak.com',
-        description: 'MX TakaTak - Indian short video platform.',
-    },
-    'Josh': {
-        url: 'https://www.josh.app',
-        description: 'Josh - Indian short video app.',
-    },
-    'Moj': {
-        url: 'https://www.mojapp.in',
-        description: 'Moj - Indian short video app.',
-    },
-    'DALL-E': {
-        url: 'https://openai.com/research/dall-e',
-        description: 'DALL-E - Image generation model by OpenAI.',
-    },
-    // Add more sites as needed
-};
-
-        function search() {
+            'CzenGPT': {
+                url: 'https://czengpt.github.io',
+                description: 'CzenGPT - A website for ChatGPT experimentation.',
+            },
+            'Syrancia': {
+                url: 'https://syrancia.unaux.com/',
+                description: 'Syrancia - A platform for creative exploration and expression.',
+            },
+            'Google': {
+                url: 'https://www.google.com',
+                description: 'Google - A search engine and technology company.',
+            },
+            'OpenAI': {
+                url: 'https://www.openai.com',
+                description: 'OpenAI - An artificial intelligence research laboratory.',
+            },
+            'Microsoft': {
+                url: 'https://www.microsoft.com',
+                description: 'Microsoft - A multinational technology company.',
+            },
+            'ChatGPT': {
+                url: 'https://www.chatgpt.com',
+                description: 'ChatGPT - Conversational AI powered by OpenAI.',
+            },
+            'Youtube': {
+                url: 'https://www.youtube.com',
+                description: 'YouTube - A video-sharing platform.',
+            },
+            'Facebook': {
+                url: 'https://www.facebook.com',
+                description: 'Facebook - A social media platform.',
+            },
+            'Twitter': {
+                url: 'https://twitter.com',
+                description: 'Twitter - A microblogging and social networking service.',
+            },
+            'Instagram': {
+                url: 'https://www.instagram.com',
+                description: 'Instagram - A photo and video-sharing social networking service.',
+            },
+            'GoDaddy': {
+                url: 'https://www.godaddy.com',
+                description: 'GoDaddy - A domain registrar and web hosting company.',
+            },
+            'WhatsApp': {
+                url: 'https://www.whatsapp.com',
+                description: 'WhatsApp - A messaging app owned by Facebook.',
+            },
+            'Wikipedia': {
+                url: 'https://www.wikipedia.org',
+                description: 'Wikipedia - A free online encyclopedia.',
+            },
+            'Wikiwand': {
+                url: 'https://www.wikiwand.com',
+                description: 'Wikiwand - A modern reader for web content.',
+            },
+            'Bing': {
+                url: 'https://www.bing.com',
+                description: 'Bing - A web search engine owned by Microsoft.',
+            },
+            'Apple': {
+                url: 'https://www.apple.com',
+                description: 'Apple - A technology company that designs and sells consumer electronics.',
+            },
+            'Netflix': {
+                url: 'https://www.netflix.com',
+                description: 'Netflix - A streaming service for movies and TV shows.',
+            },
+            'Amazon': {
+                url: 'https://www.amazon.com',
+                description: 'Amazon - An e-commerce and technology company.',
+            },
+            'Flipkart': {
+                url: 'https://www.flipkart.com',
+                description: 'Flipkart - An Indian e-commerce company.',
+            },
+            'Myntra': {
+                url: 'https://www.myntra.com',
+                description: 'Myntra - An Indian fashion e-commerce platform.',
+            },
+            'Snapdeal': {
+                url: 'https://www.snapdeal.com',
+                description: 'Snapdeal - An Indian online marketplace.',
+            },
+            'Wordpress': {
+                url: 'https://wordpress.org',
+                description: 'WordPress - An open-source content management system.',
+            },
+            'Oxford': {
+                url: 'https://www.ox.ac.uk',
+                description: 'University of Oxford - A prestigious university in the UK.',
+            },
+            'Tata': {
+                url: 'https://www.tata.com',
+                description: 'Tata Group - An Indian multinational conglomerate.',
+            },
+            'Jio': {
+                url: 'https://www.jio.com',
+                description: 'Jio - An Indian telecommunications company.',
+            },
+            'Airtel': {
+                url: 'https://www.airtel.in',
+                description: 'Airtel - An Indian telecommunications company.',
+            },
+            'Mahindra': {
+                url: 'https://www.mahindra.com',
+                description: 'Mahindra Group - An Indian multinational conglomerate.',
+            },
+            'Britannia': {
+                url: 'https://www.britannia.co.in',
+                description: 'Britannia Industries - An Indian food-products corporation.',
+            },
+            'Cambridge': {
+                url: 'https://www.cam.ac.uk',
+                description: 'University of Cambridge - A prestigious university in the UK.',
+            },
+            'Tesla': {
+                url: 'https://www.tesla.com',
+                description: 'Tesla - Electric cars, solar, and clean energy.',
+            },
+            'Infosys': {
+                url: 'https://www.infosys.com',
+                description: 'Infosys - IT consulting and services company.',
+            },
+            'Reliance': {
+                url: 'https://www.ril.com',
+                description: 'Reliance Industries - A conglomerate with interests in petrochemicals, refining, oil, and gas exploration.',
+            },
+            'TCS': {
+                url: 'https://www.tcs.com',
+                description: 'Tata Consultancy Services - IT services and consulting.',
+            },
+            'LIC': {
+                url: 'https://www.licindia.in',
+                description: 'Life Insurance Corporation of India - Insurance and investment company.',
+            },
+            'BPCL': {
+                url: 'https://www.bharatpetroleum.in',
+                description: 'Bharat Petroleum Corporation Limited - Oil and gas company.',
+            },
+            'Wipro': {
+                url: 'https://www.wipro.com',
+                description: 'Wipro - IT, consulting, and business process services.',
+            },
+            'Suzuki': {
+                url: 'https://www.suzuki.com',
+                description: 'Suzuki Motor Corporation - Automobile manufacturer.',
+            },
+            'Apple': {
+                url: 'https://www.apple.com',
+                description: 'Apple - A technology company that designs and sells consumer electronics.',
+            },
+            'Alphabet': {
+                url: 'https://abc.xyz',
+                description: 'Alphabet Inc. - The parent company of Google.',
+            },
+            'Oppo': {
+                url: 'https://www.oppo.com',
+                description: 'Oppo - Consumer electronics and mobile communications company.',
+            },
+            'BBK Electronics': {
+                url: 'https://www.bbk.com',
+                description: 'BBK Electronics - Parent company of Oppo, Vivo, Realme, and OnePlus.',
+            },
+            'Vivo': {
+                url: 'https://www.vivo.com',
+                description: 'Vivo - Smartphone manufacturer.',
+            },
+            'Realme': {
+                url: 'https://www.realme.com',
+                description: 'Realme - Smartphone manufacturer.',
+            },
+            'Xiaomi': {
+                url: 'https://www.mi.com',
+                description: 'Xiaomi - Consumer electronics and software company.',
+            },
+            'OnePlus': {
+                url: 'https://www.oneplus.com',
+                description: 'OnePlus - Smartphone manufacturer.',
+            },
+            'Huawei': {
+                url: 'https://www.huawei.com',
+                description: 'Huawei - Technology company providing telecommunications equipment and consumer electronics.',
+            },
+            'Samsung': {
+                url: 'https://www.samsung.com',
+                description: 'Samsung - Electronics and technology company.',
+            },
+            'Honor': {
+                url: 'https://www.hihonor.com',
+                description: 'Honor - Smartphone brand.',
+            },
+            'Kookaburra': {
+                url: 'https://www.kookaburra.biz',
+                description: 'Kookaburra - Cricket equipment manufacturer.',
+            },
+            'Sanspareils Greenlands (SG)': {
+                url: 'https://www.sanspareilsgreenlands.com',
+                description: 'SG - Sanspareils Greenlands - Cricket equipment manufacturer.',
+            },
+            'Dukes': {
+                url: 'https://www.dukesindia.com',
+                description: 'Dukes - Cricket and sports equipment manufacturer.',
+            },
+            'Krafton': {
+                url: 'https://www.krafton.com',
+                description: 'Krafton - Video game developer and publisher.',
+            },
+            'Garena': {
+                url: 'https://www.garena.sg',
+                description: 'Garena - Digital entertainment platform.',
+            },
+            'Duolingo': {
+                url: 'https://www.duolingo.com',
+                description: 'Duolingo - Language-learning platform.',
+            },
+            'Canva': {
+                url: 'https://www.canva.com',
+                description: 'Canva - Graphic design platform.',
+            },
+            'G-mail': {
+                url: 'https://mail.google.com',
+                description: 'Gmail - Email service by Google.',
+            },
+            'Dream11': {
+                url: 'https://www.dream11.com',
+                description: 'Dream11 - Fantasy sports platform.',
+            },
+            'My11Circle': {
+                url: 'https://www.my11circle.com',
+                description: 'My11Circle - Fantasy sports platform.',
+            },
+            'Telegram': {
+                url: 'https://telegram.org',
+                description: 'Telegram - Messaging app.',
+            },
+            'Skype': {
+                url: 'https://www.skype.com',
+                description: 'Skype - Communication platform.',
+            },
+            'Disney': {
+                url: 'https://www.disney.com',
+                description: 'Disney - Entertainment and media conglomerate.',
+            },
+            'PrimeVideo': {
+                url: 'https://www.amazon.com/Prime-Video',
+                description: 'Amazon Prime Video - Streaming service for movies and TV shows.',
+            },
+            'AltBalaji': {
+                url: 'https://www.altbalaji.com',
+                description: 'AltBalaji - Indian subscription-based video-on-demand platform.',
+            },
+            'MxPlayer': {
+                url: 'https://www.mxplayer.in',
+                description: 'MX Player - Indian video streaming and on-demand platform.',
+            },
+            'TikTok': {
+                url: 'https://www.tiktok.com',
+                description: 'TikTok - Social media platform for creating and sharing short videos.',
+            },
+            'MxTakaTak': {
+                url: 'https://www.mxtakatak.com',
+                description: 'MX TakaTak - Indian short video platform.',
+            },
+            'Josh': {
+                url: 'https://www.josh.app',
+                description: 'Josh - Indian short video app.',
+            },
+            'Moj': {
+                url: 'https://www.mojapp.in',
+                description: 'Moj - Indian short video app.',
+            },
+            'DALL-E': {
+                url: 'https://openai.com/research/dall-e',
+                description: 'DALL-E - Image generation model by OpenAI.',
+            },
+             function search() {
             const searchInput = document.getElementById('searchInput');
             const query = searchInput.value.trim();
 
@@ -369,7 +397,6 @@
             } else {
                 alert('Website not found. Perform a general search or enter a valid website name.');
             }
-        }
 
         function displayWebsiteDetails(website, container) {
             container.innerHTML = `
