@@ -3,56 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CbyurConnect - Social Network</title>
+    <title>CzenConnect Browser</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
         }
-
         header {
             background-color: #333;
             color: #fff;
+            padding: 10px;
             text-align: center;
-            padding: 1em;
         }
-
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+        nav input, nav button {
+            padding: 8px;
+            margin: 0 5px;
+        }
         section {
-            max-width: 800px;
-            margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1em;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>CbyurConnect</h1>
-        <p>Your Social Network</p>
+        <h1>CzenConnect Browser</h1>
     </header>
 
+    <nav>
+        <input type="text" id="searchInput" placeholder="Search the web">
+        <button onclick="search()">Search</button>
+        <button onclick="goBack()">Back</button>
+        <button onclick="goForward()">Forward</button>
+        <button onclick="refresh()">Refresh</button>
+    </nav>
+
     <section>
-        <h2>Welcome to CbyurConnect!</h2>
-        <p>Connect with friends, share updates, and more.</p>
+        <iframe id="browserFrame" width="100%" height="500px" src="https://czengpt.github.io" frameborder="0"></iframe>
+        <div id="websiteDetails"></div>
     </section>
 
-    <footer>
-        &copy; 2024 CbyurConnect. All rights reserved.
-    </footer>
+    <script>
+        const searchEngine = {
+            'CzenGPT': {
+                url: 'https://czengpt.github.io',
+                description: 'CzenGPT - A website for ChatGPT experimentation.',
+            },
+            'Syrancia': {
+                url: 'https://syrancia.unaux.com/',
+                description: 'Syrancia - A platform for creative exploration and expression.',
+            },
+            'Google': {
+                url: 'https://www.google.com',
+                description: 'Google - A search engine and technology company.',
+            },
+            'OpenAI': {
+                url: 'https://www.openai.com',
+                description: 'OpenAI - An artificial intelligence research laboratory.',
+            },
+            'Microsoft': {
+                url: 'https://www.microsoft.com',
+                description: 'Microsoft - A multinational technology company.',
+            },
+            'ChatGPT': {
+                url: 'https://www.chatgpt.com',
+                description: 'ChatGPT - Conversational AI powered by OpenAI.',
+            },
+            'Youtube': {
+                url: 'https://www.youtube.com',
+                description: 'YouTube - A video-sharing platform.',
+            },
+            'Facebook': {
+                url: 'https://www.facebook.com',
+                description: 'Facebook - A social media platform.',
+            },
+            'Twitter': {
+                url: 'https://twitter.com',
+                description: 'Twitter - A microblogging and social networking service.',
+            },
+            'Instagram': {
+                url: 'https://www.instagram.com',
+                description: 'Instagram - A photo and video-sharing social networking service.',
+            },
+            'GoDaddy': {
+                url: 'https://www.godaddy.com',
+                description: 'GoDaddy - A domain registrar and web hosting company.',
+            },
+            'WhatsApp': {
+                url: 'https://www.whatsapp.com',
+                description: 'WhatsApp - A messaging app owned by Facebook.',
+            },
+            'Wikipedia': {
+                url: 'https://www.wikipedia.org',
+                description: 'Wikipedia - A free online encyclopedia.',
+            },
+            'Wikiwand': {
+                url: 'https://www.wikiwand.com',
+                description: 'Wikiwand - A modern reader for web content.',
+            },
+            'Bing': {
+                url: 'https://www.bing.com',
+                description: 'Bing - A web search engine owned by Microsoft.',
+            },
+            'Apple': {
+                url: 'https://www.apple.com',
+                description: 'Apple - A technology company that designs and sells consumer electronics.',
+            },
+            'Netflix': {
+                url: 'https://www.netflix.com',
+                description: 'Netflix - A streaming service for movies and TV shows.',
+            },
+            'Amazon': {
+                url: 'https://www.amazon.com',
+                description: 'Amazon - An e-commerce and technology company.',
+            },
+            'Flipkart': {
+                url: 'https://www.flipkart.com',
+                description: 'Flipkart - An Indian e-commerce company.',
+            },
+            'Myntra': {
+                url: 'https://www.myntra.com',
+                description: 'Myntra - An Indian fashion e-commerce platform.',
+            },
+            'Snapdeal': {
+                url: 'https://www.snapdeal.com',
+                description: 'Snapdeal - An Indian online marketplace.',
+            },
+            'Wordpress': {
+                url: 'https://wordpress.org',
+                description: 'WordPress - An open-source content management system.',
+            },
+            'Oxford': {
+                url: 'https://www.ox.ac.uk',
+                description: 'University of Oxford - A prestigious university in the UK.',
+            },
+            'Tata': {
+                url: 'https://www.tata.com',
+                description: 'Tata Group - An Indian multinational conglomerate.',
+            },
+            'Jio': {
+                url: 'https://www.jio.com',
+                description: 'Jio - An Indian telecommunications company.',
+            },
+            'Airtel': {
+                url: 'https://www.airtel.in',
+                description: 'Airtel - An Indian telecommunications company.',
+            },
+            'Mahindra': {
+                url: 'https://www.mahindra.com',
+                description: 'Mahindra Group - An Indian multinational conglomerate.',
+            },
+            'Britannia': {
+                url: 'https://www.britannia.co.in',
+                description: 'Britannia Industries - An Indian food-products corporation.',
+            },
+            'Cambridge': {
+                url: 'https://www.cam.ac.uk',
+                description: 'University of Cambridge - A prestigious university in the UK.',
+            },
+            // Add more sites as needed
+        };
 
+        function search() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput.value.trim();
+
+            if (searchEngine[query]) {
+                const browserFrame = document.getElementById('browserFrame');
+                const websiteDetails = document.getElementById('websiteDetails');
+
+                browserFrame.src = searchEngine[query].url;
+                displayWebsiteDetails(searchEngine[query], websiteDetails);
+            } else {
+                alert('Website not found. Perform a general search or enter a valid website name.');
+            }
+        }
+
+        function displayWebsiteDetails(website, container) {
+            container.innerHTML = `
+                <h2>${website.url}</h2>
+                <p>${website.description}</p>
+            `;
+        }
+
+        function goBack() {
+            const browserFrame = document.getElementById('browserFrame');
+            browserFrame.contentWindow.history.back();
+        }
+
+        function goForward() {
+            const browserFrame = document.getElementById('browserFrame');
+            browserFrame.contentWindow.history.forward();
+        }
+
+        function refresh() {
+            const browserFrame = document.getElementById('browserFrame');
+            browserFrame.contentWindow.location.reload();
+        }
+    </script>
 </body>
 </html>
