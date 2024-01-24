@@ -6,423 +6,340 @@
     <title>CzenConnect Browser</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1b1b1b;
-            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-        header {
-            background-color: #222;
-            color: #ff3333;
-            padding: 15px;
+
+        section {
             text-align: center;
-            font-size: 24px;
-            animation: flash 2s infinite alternate;
+            margin-top: 50px;
         }
-        nav {
-            background-color: #333;
+
+        #browserFrame {
+            width: 800px;
+            height: 500px;
+            border: none;
+        }
+
+        #search-box {
             padding: 10px;
-            text-align: center;
-        }
-        nav input, nav button {
-            padding: 8px;
-            margin: 0 5px;
+            width: 400px;
             font-size: 16px;
         }
-        nav button {
-            background-color: #ff3333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
+
+        #search-button {
+            padding: 10px;
+            font-size: 16px;
         }
-        nav button:hover {
-            background-color: #ff6666;
-        }
-        section {
-            padding: 20px;
-        }
-        iframe {
-            width: 100%;
-            height: 500px;
-            border: 2px solid #333;
-            border-radius: 5px;
-            animation: flash 0.5s;
-        }
-        #websiteDetails {
+
+        #results {
             margin-top: 20px;
-            padding: 15px;
-            background-color: #333;
-            border-radius: 5px;
         }
+
+        #websiteDetails {
+            margin-top: 10px;
+        }
+
         footer {
-            background-color: #222;
-            color: #ff3333;
+            margin-top: 20px;
             text-align: center;
-            padding: 15px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        footer p {
-            margin: 0;
-        }
-        @keyframes flash {
-            from {
-                opacity: 0.7;
-            }
-            to {
-                opacity: 1;
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>CzenConnect Browser</h1>
-    </header>
-
-    <nav>
-        <input type="text" id="searchInput" placeholder="Search the web">
-        <button onclick="search()">Search</button>
-        <button onclick="goBack()">Back</button>
-        <button onclick="goForward()">Forward</button>
-        <button onclick="refresh()">Refresh</button>
-        <button onclick="openPage('connect.html')">Connect</button>
-        <button onclick="openPage('about.html')">About</button>
-        <button onclick="openPage('contact.html')">Contact</button>
-        <button onclick="openPage('login.html')">Login</button>
-        <button onclick="openPage('signup.html')">Signup</button>
-        <!-- More buttons can be added here if needed -->
-
-    </nav>
-
     <section>
         <iframe id="browserFrame" src="" frameborder="0"></iframe>
         <div id="websiteDetails"></div>
     </section>
+
+    <section>
+        <input type="text" id="search-box" placeholder="Enter your search query">
+        <button id="search-button" onclick="search()">Search</button>
+    </section>
+
+    <section id="results"></section>
 
     <footer>
         <p>&copy; 2024 CzenConnect Browser</p>
     </footer>
 
     <script>
+        const websites = {
+            "CzenGPT": {
+                url: "https://czengroup.github.io/CzenGPT",
+                details: "CzenGPT is a powerful language model developed by CzenGroup."
+            },
+            "ChatGPT": {
+                url: "https://www.openai.com/chatgpt",
+                details: "ChatGPT is a language model developed by OpenAI for natural language processing."
+            },
+            "OpenAI": {
+                url: "https://www.openai.com",
+                details: "OpenAI is an artificial intelligence research laboratory consisting of the for-profit OpenAI LP and its non-profit parent company, OpenAI Inc."
+            },
+            "Microsoft": {
+                url: "https://www.microsoft.com",
+                details: "Microsoft is a multinational technology company known for its software products, including the Windows operating system."
+            },
+            "Amazon": {
+                url: "https://www.amazon.com",
+                details: "Amazon is an American multinational technology and e-commerce company."
+            },
+            "Tata": {
+                url: "https://www.tata.com",
+                details: "Tata Group is an Indian multinational conglomerate with businesses in various sectors, including steel, automotive, and technology."
+            },
+            "BBK Electronics": {
+                url: "https://www.bbk.com",
+                details: "BBK Electronics is a Chinese multinational corporation that owns and operates multiple consumer electronics brands."
+            },
+            "Vivo": {
+                url: "https://www.vivo.com",
+                details: "Vivo is a Chinese smartphone manufacturer and a subsidiary of BBK Electronics."
+            },
+            "Oppo": {
+                url: "https://www.oppo.com",
+                details: "Oppo is a Chinese consumer electronics and mobile communications company."
+            },
+            "Realme": {
+                url: "https://www.realme.com",
+                details: "Realme is a Chinese smartphone manufacturer and a subsidiary of Oppo."
+            },
+            "Redmi": {
+                url: "https://www.mi.com",
+                details: "Redmi is a sub-brand of Xiaomi, a Chinese electronics company."
+            },
+            "Xiaomi": {
+                url: "https://www.xiaomi.com",
+                details: "Xiaomi is a Chinese multinational electronics company known for its smartphones, smart home devices, and other consumer electronics."
+            },
+            "Google": {
+                url: "https://www.google.com",
+                details: "Google is a multinational technology company known for its search engine and online services."
+            },
+            "Chrome": {
+                url: "https://www.google.com/chrome",
+                details: "Google Chrome is a web browser developed by Google."
+            },
+            "Bing": {
+                url: "https://www.bing.com",
+                details: "Bing is a web search engine owned and operated by Microsoft."
+            },
+            "Firefox": {
+                url: "https://www.mozilla.org/firefox",
+                details: "Mozilla Firefox is a web browser developed by the Mozilla Foundation."
+            },
+            "Asus": {
+                url: "https://www.asus.com",
+                details: "Asus is a Taiwanese multinational computer and phone hardware and electronics company."
+            },
+            "Jio": {
+                url: "https://www.jio.com",
+                details: "Jio is an Indian telecommunications company and a subsidiary of Reliance Industries."
+            },
+            "Reliance": {
+                url: "https://www.ril.com",
+                details: "Reliance Industries is an Indian conglomerate with businesses in various sectors, including petrochemicals, refining, and telecommunications."
+            },
+            "Aditya Birla": {
+                url: "https://www.adityabirla.com",
+                details: "Aditya Birla Group is an Indian multinational conglomerate with interests in various industries, including metals, cement, and telecommunications."
+            },
+            "L.G.": {
+                url: "https://www.lg.com",
+                details: "LG Corporation is a South Korean multinational conglomerate known for its electronics, home appliances, and chemicals."
+            },
+            "TCS": {
+                url: "https://www.tcs.com",
+                details: "Tata Consultancy Services (TCS) is an Indian multinational IT services and consulting company."
+            },
+            "GoDaddy": {
+                url: "https://www.godaddy.com",
+                details: "GoDaddy is an American internet domain registrar and web hosting company."
+            },
+            "DALL-E": {
+                url: "https://www.openai.com/research/dall-e",
+                details: "DALL-E is a machine learning model developed by OpenAI that generates images from textual descriptions."
+            },
+            "The Hindu": {
+                url: "https://www.thehindu.com",
+                details: "The Hindu is an Indian daily newspaper."
+            },
+            "New York Times": {
+                url: "https://www.nytimes.com",
+                details: "The New York Times is an American newspaper based in New York City."
+            },
+            "The Washington Post": {
+                url: "https://www.washingtonpost.com",
+                details: "The Washington Post is an American newspaper based in Washington, D.C."
+            },
+            "Cosco": {
+                url: "https://www.cosco.in",
+                details: "Cosco is an Indian sports equipment manufacturer."
+            },
+            "SG": {
+                url: "https://www.sgsportsindia.com",
+                details: "SG is an Indian sports equipment manufacturer."
+            },
+            "Duke": {
+                url: "https://www.dukeindia.com",
+                details: "Duke is an Indian clothing and accessories brand."
+            },
+            "Kookaburra": {
+                url: "https://www.kookaburra.biz",
+                details: "Kookaburra is an Australian sports equipment company."
+            },
+            "HP": {
+                url: "https://www.hp.com",
+                details: "HP (Hewlett-Packard) is an American information technology company."
+            },
+            "Bharat Petroleum": {
+                url: "https://www.bharatpetroleum.in",
+                details: "Bharat Petroleum is an Indian state-controlled oil and gas company."
+            },
+            "Lux": {
+                url: "https://www.lux.com",
+                details: "Lux is a global brand of soap and skincare products."
+            },
+            "Amul": {
+                url: "https://www.amul.com",
+                details: "Amul is an Indian dairy cooperative."
+            },
+            "Lamborghini": {
+                url: "https://www.lamborghini.com",
+                details: "Lamborghini is an Italian luxury sports car manufacturer."
+            },
+            "Ducati": {
+                url: "https://www.ducati.com",
+                details: "Ducati is an Italian motorcycle manufacturer."
+            },
+            "Rolex": {
+                url: "https://www.rolex.com",
+                details: "Rolex is a Swiss luxury watchmaker."
+            },
+            "Marvel": {
+                url: "https://www.marvel.com",
+                details: "Marvel is an American media franchise and entertainment company."
+            },
+            "Alphabet": {
+                url: "https://abc.xyz",
+                details: "Alphabet Inc. is the parent company of Google."
+            },
+            "PrimeVideo": {
+                url: "https://www.amazon.com/Prime-Video",
+                details: "Amazon Prime Video is a streaming service by Amazon."
+            },
+            "Motorola": {
+                url: "https://www.motorola.com",
+                details: "Motorola is an American telecommunications company."
+            },
+            "Netflix": {
+                url: "https://www.netflix.com",
+                details: "Netflix is a subscription-based streaming service."
+            },
+            "MxTakaTak": {
+                url: "https://www.mxplayer.in/app/mxtakatak",
+                details: "MxTakaTak is an Indian short video app."
+            },
+            "AltBalaji": {
+                url: "https://www.altbalaji.com",
+                details: "AltBalaji is an Indian subscription-based streaming platform."
+            },
+            "MX Player": {
+                url: "https://www.mxplayer.in",
+                details: "MX Player is an Indian video streaming and media player app."
+            },
+            "Disney": {
+                url: "https://www.disney.com",
+                details: "The Walt Disney Company is an American entertainment conglomerate."
+            },
+            "HDFC Bank": {
+                url: "https://www.hdfcbank.com",
+                details: "HDFC Bank is an Indian banking and financial services company."
+            },
+            "Airtel": {
+                url: "https://www.airtel.in",
+                details: "Airtel is an Indian telecommunications company."
+            },
+            "Vodafone Idea": {
+                url: "https://www.myvi.in",
+                details: "Vodafone Idea is an Indian telecommunications company."
+            },
+            "WhatsApp": {
+                url: "https://www.whatsapp.com",
+                details: "WhatsApp is a messaging app owned by Facebook."
+            },
+            "Wordpress": {
+                url: "https://wordpress.org",
+                details: "WordPress is a content management system for building websites."
+            },
+            "Wikipedia": {
+                url: "https://www.wikipedia.org",
+                details: "Wikipedia is a free online encyclopedia."
+            },
+            "Wikiwand": {
+                url: "https://www.wikiwand.com",
+                details: "Wikiwand is a modern reader for Wikipedia."
+            },
+            "Facebook": {
+                url: "https://www.facebook.com",
+                details: "Facebook is a social networking site."
+            },
+            "Twitter": {
+                url: "https://www.twitter.com",
+                details: "Twitter is a microblogging and social networking site."
+            },
+            "Instagram": {
+                url: "https://www.instagram.com",
+                details: "Instagram is a photo and video sharing social platform."
+            },
+            "Garena": {
+                url: "https://www.garena.sg",
+                details: "Garena is a Singaporean digital services company."
+            },
+            "Samsung": {
+                url: "https://www.samsung.com",
+                details: "Samsung is a South Korean multinational conglomerate."
+            },
+            "Krafton": {
+                url: "https://www.krafton.com",
+                details: "Krafton is a South Korean video game holding company."
+            },
+            "Hindustan Pencils": {
+                url: "https://www.hindustanpencils.com",
+                details: "Hindustan Pencils is an Indian stationery manufacturer."
+            },
+            "Hindustan Petroleum": {
+                url: "https://www.hindustanpetroleum.com",
+                details: "Hindustan Petroleum is an Indian state-owned oil and natural gas company."
+            },
+            "Hindustan Unilever": {
+                url: "https://www.hul.co.in",
+                details: "Hindustan Unilever is an Indian consumer goods company."
+            },
+            // Add more websites as needed
+        };
+
         const searchEngine = {
-            'CzenGPT': {
-                url: 'https://czengpt.github.io',
-                description: 'CzenGPT - A website for ChatGPT experimentation.',
-            },
-            'Syrancia': {
-                url: 'https://syrancia.unaux.com/',
-                description: 'Syrancia - A platform for creative exploration and expression.',
-            },
-            'Google': {
-                url: 'https://www.google.com',
-                description: 'Google - A search engine and technology company.',
-            },
-            'OpenAI': {
-                url: 'https://www.openai.com',
-                description: 'OpenAI - An artificial intelligence research laboratory.',
-            },
-            'Microsoft': {
-                url: 'https://www.microsoft.com',
-                description: 'Microsoft - A multinational technology company.',
-            },
-            'ChatGPT': {
-                url: 'https://www.chatgpt.com',
-                description: 'ChatGPT - Conversational AI powered by OpenAI.',
-            },
-            'Youtube': {
-                url: 'https://www.youtube.com',
-                description: 'YouTube - A video-sharing platform.',
-            },
-            'Facebook': {
-                url: 'https://www.facebook.com',
-                description: 'Facebook - A social media platform.',
-            },
-            'Twitter': {
-                url: 'https://twitter.com',
-                description: 'Twitter - A microblogging and social networking service.',
-            },
-            'Instagram': {
-                url: 'https://www.instagram.com',
-                description: 'Instagram - A photo and video-sharing social networking service.',
-            },
-            'GoDaddy': {
-                url: 'https://www.godaddy.com',
-                description: 'GoDaddy - A domain registrar and web hosting company.',
-            },
-            'WhatsApp': {
-                url: 'https://www.whatsapp.com',
-                description: 'WhatsApp - A messaging app owned by Facebook.',
-            },
-            'Wikipedia': {
-                url: 'https://www.wikipedia.org',
-                description: 'Wikipedia - A free online encyclopedia.',
-            },
-            'Wikiwand': {
-                url: 'https://www.wikiwand.com',
-                description: 'Wikiwand - A modern reader for web content.',
-            },
-            'Bing': {
-                url: 'https://www.bing.com',
-                description: 'Bing - A web search engine owned by Microsoft.',
-            },
-            'Apple': {
-                url: 'https://www.apple.com',
-                description: 'Apple - A technology company that designs and sells consumer electronics.',
-            },
-            'Netflix': {
-                url: 'https://www.netflix.com',
-                description: 'Netflix - A streaming service for movies and TV shows.',
-            },
-            'Amazon': {
-                url: 'https://www.amazon.com',
-                description: 'Amazon - An e-commerce and technology company.',
-            },
-            'Flipkart': {
-                url: 'https://www.flipkart.com',
-                description: 'Flipkart - An Indian e-commerce company.',
-            },
-            'Myntra': {
-                url: 'https://www.myntra.com',
-                description: 'Myntra - An Indian fashion e-commerce platform.',
-            },
-            'Snapdeal': {
-                url: 'https://www.snapdeal.com',
-                description: 'Snapdeal - An Indian online marketplace.',
-            },
-            'Wordpress': {
-                url: 'https://wordpress.org',
-                description: 'WordPress - An open-source content management system.',
-            },
-            'Oxford': {
-                url: 'https://www.ox.ac.uk',
-                description: 'University of Oxford - A prestigious university in the UK.',
-            },
-            'Tata': {
-                url: 'https://www.tata.com',
-                description: 'Tata Group - An Indian multinational conglomerate.',
-            },
-            'Jio': {
-                url: 'https://www.jio.com',
-                description: 'Jio - An Indian telecommunications company.',
-            },
-            'Airtel': {
-                url: 'https://www.airtel.in',
-                description: 'Airtel - An Indian telecommunications company.',
-            },
-            'Mahindra': {
-                url: 'https://www.mahindra.com',
-                description: 'Mahindra Group - An Indian multinational conglomerate.',
-            },
-            'Britannia': {
-                url: 'https://www.britannia.co.in',
-                description: 'Britannia Industries - An Indian food-products corporation.',
-            },
-            'Cambridge': {
-                url: 'https://www.cam.ac.uk',
-                description: 'University of Cambridge - A prestigious university in the UK.',
-            },
-            'Tesla': {
-                url: 'https://www.tesla.com',
-                description: 'Tesla - Electric cars, solar, and clean energy.',
-            },
-            'Infosys': {
-                url: 'https://www.infosys.com',
-                description: 'Infosys - IT consulting and services company.',
-            },
-            'Reliance': {
-                url: 'https://www.ril.com',
-                description: 'Reliance Industries - A conglomerate with interests in petrochemicals, refining, oil, and gas exploration.',
-            },
-            'TCS': {
-                url: 'https://www.tcs.com',
-                description: 'Tata Consultancy Services - IT services and consulting.',
-            },
-            'LIC': {
-                url: 'https://www.licindia.in',
-                description: 'Life Insurance Corporation of India - Insurance and investment company.',
-            },
-            'BPCL': {
-                url: 'https://www.bharatpetroleum.in',
-                description: 'Bharat Petroleum Corporation Limited - Oil and gas company.',
-            },
-            'Wipro': {
-                url: 'https://www.wipro.com',
-                description: 'Wipro - IT, consulting, and business process services.',
-            },
-            'Suzuki': {
-                url: 'https://www.suzuki.com',
-                description: 'Suzuki Motor Corporation - Automobile manufacturer.',
-            },
-            'Apple': {
-                url: 'https://www.apple.com',
-                description: 'Apple - A technology company that designs and sells consumer electronics.',
-            },
-            'Alphabet': {
-                url: 'https://abc.xyz',
-                description: 'Alphabet Inc. - The parent company of Google.',
-            },
-            'Oppo': {
-                url: 'https://www.oppo.com',
-                description: 'Oppo - Consumer electronics and mobile communications company.',
-            },
-            'BBK Electronics': {
-                url: 'https://www.bbk.com',
-                description: 'BBK Electronics - Parent company of Oppo, Vivo, Realme, and OnePlus.',
-            },
-            'Vivo': {
-                url: 'https://www.vivo.com',
-                description: 'Vivo - Smartphone manufacturer.',
-            },
-            'Realme': {
-                url: 'https://www.realme.com',
-                description: 'Realme - Smartphone manufacturer.',
-            },
-            'Xiaomi': {
-                url: 'https://www.mi.com',
-                description: 'Xiaomi - Consumer electronics and software company.',
-            },
-            'OnePlus': {
-                url: 'https://www.oneplus.com',
-                description: 'OnePlus - Smartphone manufacturer.',
-            },
-            'Huawei': {
-                url: 'https://www.huawei.com',
-                description: 'Huawei - Technology company providing telecommunications equipment and consumer electronics.',
-            },
-            'Samsung': {
-                url: 'https://www.samsung.com',
-                description: 'Samsung - Electronics and technology company.',
-            },
-            'Honor': {
-                url: 'https://www.hihonor.com',
-                description: 'Honor - Smartphone brand.',
-            },
-            'Kookaburra': {
-                url: 'https://www.kookaburra.biz',
-                description: 'Kookaburra - Cricket equipment manufacturer.',
-            },
-            'Sanspareils Greenlands (SG)': {
-                url: 'https://www.sanspareilsgreenlands.com',
-                description: 'SG - Sanspareils Greenlands - Cricket equipment manufacturer.',
-            },
-            'Dukes': {
-                url: 'https://www.dukesindia.com',
-                description: 'Dukes - Cricket and sports equipment manufacturer.',
-            },
-            'Krafton': {
-                url: 'https://www.krafton.com',
-                description: 'Krafton - Video game developer and publisher.',
-            },
-            'Garena': {
-                url: 'https://www.garena.sg',
-                description: 'Garena - Digital entertainment platform.',
-            },
-            'Duolingo': {
-                url: 'https://www.duolingo.com',
-                description: 'Duolingo - Language-learning platform.',
-            },
-            'Canva': {
-                url: 'https://www.canva.com',
-                description: 'Canva - Graphic design platform.',
-            },
-            'G-mail': {
-                url: 'https://mail.google.com',
-                description: 'Gmail - Email service by Google.',
-            },
-            'Dream11': {
-                url: 'https://www.dream11.com',
-                description: 'Dream11 - Fantasy sports platform.',
-            },
-            'My11Circle': {
-                url: 'https://www.my11circle.com',
-                description: 'My11Circle - Fantasy sports platform.',
-            },
-            'Telegram': {
-                url: 'https://telegram.org',
-                description: 'Telegram - Messaging app.',
-            },
-            'Skype': {
-                url: 'https://www.skype.com',
-                description: 'Skype - Communication platform.',
-            },
-            'Disney': {
-                url: 'https://www.disney.com',
-                description: 'Disney - Entertainment and media conglomerate.',
-            },
-            'PrimeVideo': {
-                url: 'https://www.amazon.com/Prime-Video',
-                description: 'Amazon Prime Video - Streaming service for movies and TV shows.',
-            },
-            'AltBalaji': {
-                url: 'https://www.altbalaji.com',
-                description: 'AltBalaji - Indian subscription-based video-on-demand platform.',
-            },
-            'MxPlayer': {
-                url: 'https://www.mxplayer.in',
-                description: 'MX Player - Indian video streaming and on-demand platform.',
-            },
-            'TikTok': {
-                url: 'https://www.tiktok.com',
-                description: 'TikTok - Social media platform for creating and sharing short videos.',
-            },
-            'MxTakaTak': {
-                url: 'https://www.mxtakatak.com',
-                description: 'MX TakaTak - Indian short video platform.',
-            },
-            'Josh': {
-                url: 'https://www.josh.app',
-                description: 'Josh - Indian short video app.',
-            },
-            'Moj': {
-                url: 'https://www.mojapp.in',
-                description: 'Moj - Indian short video app.',
-            },
-            'DALL-E': {
-                url: 'https://openai.com/research/dall-e',
-                description: 'DALL-E - Image generation model by OpenAI.',
-            },
-             function search() {
-            const searchInput = document.getElementById('searchInput');
-            const query = searchInput.value.trim();
+            search: function() {
+                var searchQuery = document.getElementById('search-box').value.toLowerCase();
+                var resultsContainer = document.getElementById('results');
+                var websiteDetailsContainer = document.getElementById('websiteDetails');
+                var browserFrame = document.getElementById('browserFrame');
 
-            if (searchEngine[query]) {
-                const browserFrame = document.getElementById('browserFrame');
-                const websiteDetails = document.getElementById('websiteDetails');
-
-                browserFrame.src = searchEngine[query].url;
-                displayWebsiteDetails(searchEngine[query], websiteDetails);
-            } else {
-                alert('Website not found. Perform a general search or enter a valid website name.');
+                // Check if the search query matches a known website
+                if (websites[searchQuery]) {
+                    var website = websites[searchQuery];
+                    resultsContainer.innerHTML = '<p>Search results for: ' + searchQuery + '</p>';
+                    websiteDetailsContainer.innerHTML = '<p>' + website.details + '</p>';
+                    browserFrame.src = website.url;
+                } else {
+                    resultsContainer.innerHTML = '<p>No results found for: ' + searchQuery + '</p>';
+                    websiteDetailsContainer.innerHTML = '';
+                    browserFrame.src = '';
+                }
             }
-
-        function displayWebsiteDetails(website, container) {
-            container.innerHTML = `
-                <h2>${website.url}</h2>
-                <p>${website.description}</p>
-            `;
-        }
-
-        function goBack() {
-            const browserFrame = document.getElementById('browserFrame');
-            browserFrame.contentWindow.history.back();
-        }
-
-        function goForward() {
-            const browserFrame = document.getElementById('browserFrame');
-            browserFrame.contentWindow.history.forward();
-        }
-
-        function refresh() {
-            const browserFrame = document.getElementById('browserFrame');
-            browserFrame.contentWindow.location.reload();
-        }
-
-        function openPage(page) {
-            window.location.href = page;
-        }
+        };
     </script>
 </body>
 </html>
