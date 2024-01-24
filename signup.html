@@ -3,108 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CbyurConnect - Sign Up</title>
+    <title>Sign Up for CzenConnect</title>
     <style>
-        /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
         }
-
         header {
             background-color: #333;
             color: #fff;
             padding: 10px;
             text-align: center;
         }
-
         nav {
-            background-color: #666;
+            background-color: #444;
             padding: 10px;
             text-align: center;
         }
-
         nav a {
             color: #fff;
             text-decoration: none;
-            padding: 10px 20px;
             margin: 0 10px;
-            border-radius: 5px;
-            background-color: #444;
         }
-
         section {
             padding: 20px;
-            max-width: 400px;
-            margin: auto;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-bottom: 10px;
-        }
-
-        input {
-            padding: 10px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
             width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>CbyurConnect</h1>
+        <h1>Sign Up for CzenConnect</h1>
     </header>
 
     <nav>
-        <a href="home.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="connect.html">Connect</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
-        <a href="login.html">Log In</a>
-        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Signup</a>
     </nav>
 
     <section>
-        <h2>Sign Up</h2>
-
-        <form>
-            <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname" required>
+        <form id="signupForm" onsubmit="return redirectToIndex()">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
-
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
@@ -113,9 +83,13 @@
         </form>
     </section>
 
-    <footer>
-        &copy; 2024 CbyurConnect. All rights reserved.
-    </footer>
-
+    <script>
+        function redirectToIndex() {
+            // For demonstration purposes, assuming successful signup
+            alert("Signup successful!"); // You can remove this line in a real application
+            window.location.href = "index.html";
+            return false; // Prevents the form from submitting
+        }
+    </script>
 </body>
 </html>
