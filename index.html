@@ -7,20 +7,39 @@
     <title>CzenConnect Browser</title>
     <style>
         /* Your existing styles remain unchanged */
-
+        <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
         }
-
         header {
             background-color: #333;
             color: #fff;
             padding: 10px;
             text-align: center;
-            margin-top: 50px;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+         footer {
+         background-color: #333;
+         color: #fff;
+         text-align: center;
+         padding: 10px;
+         position: fixed;
+         bottom: 0;
+         width: 100%;
+        }
+        footer p {
+            margin: 0;
         }
 
         #browserFrame {
@@ -80,7 +99,7 @@
     <section>
         <form id="searchForm" onsubmit="search(); return false;">
             <label for="searchInput">Search CzenConnect:</label>
-            <input type="text" id="searchInput" placeholder='Type your search here, e.g., "ChatGPT URL:https://chat.openai.com/ and details about ChatGPT"'>
+            <input type="text" id="searchInput" placeholder='Type your search here'>
             <input type="submit" value="Search">
         </form>
     </section>
