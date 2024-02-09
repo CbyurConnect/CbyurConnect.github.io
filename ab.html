@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Light gray background */
+        }
+
+        #gameBoard {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 80px;
+            height: 80px;
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameBoard"></div>
+
+    <script>
+        // Define an array of card symbols
+        const symbols = ['🌟', '🍎', '🚗', '🐱', '🎈', '🍕', '🌈', '🎁'];
+
+        // Duplicate the symbols to create pairs
+        const cardPairs = symbols.concat(symbols);
+
+        // Shuffle the card pairs
+        const shuffledCards = shuffleArray(cardPairs);
+
+        // Create a game board with card elements
+        const gameBoard = document.getElementById('gameBoard');
+        shuffledCards.forEach(symbol => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.textContent = symbol;
+            card.addEventListener('click', flipCard);
+            gameBoard.appendChild(card);
+        });
+
+        let flippedCards = [];
+
+        function flipCard() {
+            if (flippedCards.length < 2 && !flippedCards.includes(this)) {
+                this.classList.add('flipped');
+                flippedCards.push(this);
+
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMatch, 1000);
+                }
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.textContent === card2.textContent) {
+                card1.removeEventListener('click', flipCard);
+                card2.removeEventListener('click', flipCard);
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+            }
+
+            flippedCards = [];
+        }
+
+        function shuffleArray(array) {
+            const shuffledArray = [...array];
+            for (let i = shuffledArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+            }
+            return shuffledArray;
+        }
+    </script>
+</body>
+</html>
