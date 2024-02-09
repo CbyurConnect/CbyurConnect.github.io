@@ -14,12 +14,13 @@
             display: block;
             margin: 0 auto;
             background-color: #000; /* Black background */
+            border: 1px solid #fff;
         }
         .watermark {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            color: rgba(0, 0, 0, 0.3);
+            color: rgba(255, 255, 255, 0.3);
             font-size: 14px;
         }
     </style>
@@ -32,14 +33,79 @@
         const canvas = document.getElementById('pongCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Paddle and ball initialization code here
+        // Paddle initialization
+        const paddleWidth = 10;
+        const paddleHeight = 60;
+        const leftPaddle = { x: 10, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+        const rightPaddle = { x: canvas.width - 20, y: canvas.height / 2 - paddleHeight / 2, dy: 0 };
+
+        // Ball initialization
+        const ballSize = 10;
+        const ball = { x: canvas.width / 2, y: canvas.height / 2, dx: 4, dy: 4 };
+
+        function drawPaddle(x, y) {
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(x, y, paddleWidth, paddleHeight);
+        }
+
+        function drawBall() {
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ballSize, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
         function draw() {
-            // Drawing code here
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw paddles
+            drawPaddle(leftPaddle.x, leftPaddle.y);
+            drawPaddle(rightPaddle.x, rightPaddle.y);
+
+            // Draw the ball
+            drawBall();
         }
 
         function update() {
-            // Update code here
+            // Update paddle positions
+            leftPaddle.y += leftPaddle.dy;
+            rightPaddle.y += rightPaddle.dy;
+
+            // Ensure paddles stay within the canvas
+            leftPaddle.y = Math.max(0, Math.min(leftPaddle.y, canvas.height - paddleHeight));
+            rightPaddle.y = Math.max(0, Math.min(rightPaddle.y, canvas.height - paddleHeight));
+
+            // Update ball position
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Ball collision with top and bottom walls
+            if (ball.y - ballSize < 0 || ball.y + ballSize > canvas.height) {
+                ball.dy = -ball.dy;
+            }
+
+            // Ball collision with paddles
+            if (
+                (ball.x - ballSize < leftPaddle.x + paddleWidth &&
+                ball.y > leftPaddle.y &&
+                ball.y < leftPaddle.y + paddleHeight) ||
+                (ball.x + ballSize > rightPaddle.x &&
+                ball.y > rightPaddle.y &&
+                ball.y < rightPaddle.y + paddleHeight)
+            ) {
+                ball.dx = -ball.dx;
+            }
+
+            // Ball out of bounds (scoring)
+            if (ball.x - ballSize < 0 || ball.x + ballSize > canvas.width) {
+                // Reset ball position
+                ball.x = canvas.width / 2;
+                ball.y = canvas.height / 2;
+
+                // Reverse ball direction
+                ball.dx = -ball.dx;
+            }
         }
 
         function gameLoop() {
@@ -47,6 +113,37 @@
             draw();
             requestAnimationFrame(gameLoop);
         }
+
+        // Keyboard input for controlling paddles
+        window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    rightPaddle.dy = -5;
+                    break;
+                case 'ArrowDown':
+                    rightPaddle.dy = 5;
+                    break;
+                case 'w':
+                    leftPaddle.dy = -5;
+                    break;
+                case 's':
+                    leftPaddle.dy = 5;
+                    break;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    rightPaddle.dy = 0;
+                    break;
+                case 'w':
+                case 's':
+                    leftPaddle.dy = 0;
+                    break;
+            }
+        });
 
         // Start the game loop
         gameLoop();
