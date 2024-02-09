@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,46 +16,49 @@
             margin: 0 auto;
             background-color: #eee; /* Light gray background */
             border: 1px solid #ccc;
+            max-width: 100%;
+            height: auto;
         }
-        .watermark {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            color: rgba(0, 0, 0, 0.3);
-            font-size: 14px;
-        }
-        .score {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #333;
-            font-size: 20px;
-        }
-        .highest-score {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #333;
-            font-size: 20px;
-        }
+
+        .watermark,
+        .score,
+        .highest-score,
         .game-name {
             position: absolute;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .watermark {
+            bottom: 5px;
+            right: 5px;
+        }
+
+        .score {
+            top: 10px;
+            left: 10px;
+        }
+
+        .highest-score {
+            top: 10px;
+            right: 10px;
+        }
+
+        .game-name {
             top: 10px;
             left: 50%;
             transform: translateX(-50%);
-            color: #333;
-            font-size: 20px;
-            font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <canvas id="breakoutCanvas" width="480" height="320"></canvas>
     <div class="watermark">Amang</div>
     <div class="score">Score: 0</div>
     <div class="highest-score">Highest Score: 0</div>
     <div class="game-name">Breakout Game - Amang</div>
-    
+
     <script>
         const canvas = document.getElementById('breakoutCanvas');
         const ctx = canvas.getContext('2d');
@@ -208,4 +212,5 @@
         gameLoop();
     </script>
 </body>
+
 </html>
