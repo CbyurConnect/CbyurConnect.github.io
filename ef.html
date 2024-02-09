@@ -51,8 +51,6 @@
         const canvas = document.getElementById('breakoutCanvas');
         const ctx = canvas.getContext('2d');
 
-        let score = 0;
-
         // Paddle, ball, and bricks initialization code here
         const paddleWidth = 80;
         const paddleHeight = 10;
@@ -64,6 +62,8 @@
         let ballY = canvas.height - paddleHeight - ballRadius;
         let ballSpeedX = 2;
         let ballSpeedY = -2;
+
+        let score = 0;
 
         function draw() {
             // Drawing code here
@@ -94,7 +94,6 @@
             moveBall();
             handleCollisions();
             checkGameOver();
-            updateScore();
         }
 
         function movePaddle() {
@@ -122,7 +121,7 @@
             // Bounce off paddle
             if (ballY + ballRadius > canvas.height - paddleHeight && ballX > paddleX && ballX < paddleX + paddleWidth) {
                 ballSpeedY = -ballSpeedY;
-                score++; // Increase score when ball hits the paddle
+                increaseScore();
             }
         }
 
@@ -132,6 +131,15 @@
 
         function checkGameOver() {
             // Implement game over conditions (e.g., when the ball goes below the paddle)
+        }
+
+        function increaseScore() {
+            score++;
+            updateScore();
+        }
+
+        function updateScore() {
+            document.querySelector('.score').textContent = 'Score: ' + score;
         }
 
         // Keyboard input handling
@@ -155,10 +163,6 @@
             } else if (e.key === "Left" || e.key === "ArrowLeft") {
                 leftPressed = false;
             }
-        }
-
-        function updateScore() {
-            document.querySelector('.score').textContent = 'Score: ' + score;
         }
 
         function gameLoop() {
