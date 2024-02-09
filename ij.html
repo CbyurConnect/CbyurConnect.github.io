@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +16,30 @@
             margin: 0 auto;
             background-color: #000; /* Black background */
             border: 1px solid #fff;
+            max-width: 100%;
+            height: auto;
         }
-        .watermark {
+
+        .watermark,
+        .game-name {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
             color: rgba(255, 255, 255, 0.3);
             font-size: 14px;
         }
+
+        .watermark {
+            bottom: 5px;
+            right: 10px;
+        }
+
+        .game-name {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
+
 <body>
     <canvas id="pongCanvas" width="800" height="400"></canvas>
     <div class="watermark">Amang</div>
@@ -102,11 +117,11 @@
             // Ball collision with paddles
             if (
                 (ball.x - ballSize < leftPaddle.x + paddleWidth &&
-                ball.y > leftPaddle.y &&
-                ball.y < leftPaddle.y + paddleHeight) ||
+                    ball.y > leftPaddle.y &&
+                    ball.y < leftPaddle.y + paddleHeight) ||
                 (ball.x + ballSize > rightPaddle.x &&
-                ball.y > rightPaddle.y &&
-                ball.y < rightPaddle.y + paddleHeight)
+                    ball.y > rightPaddle.y &&
+                    ball.y < rightPaddle.y + paddleHeight)
             ) {
                 ball.dx = -ball.dx;
             }
@@ -121,6 +136,9 @@
                 leftScore++;
                 resetBall();
             }
+
+            // Auto-move right paddle
+            rightPaddle.dy = (ball.y - (rightPaddle.y + paddleHeight / 2)) * 0.1;
         }
 
         function resetBall() {
@@ -171,4 +189,5 @@
         gameLoop();
     </script>
 </body>
+
 </html>
