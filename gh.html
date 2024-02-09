@@ -8,14 +8,12 @@
         body {
             margin: 0;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background-color: #2E8B57; /* Green background */
         }
 
         canvas {
+            display: block;
+            margin: 0 auto;
             border: 1px solid #000;
         }
 
@@ -26,16 +24,41 @@
             color: rgba(0, 0, 0, 0.3);
             font-size: 14px;
         }
+
+        .game-name {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
     <canvas id="snakeCanvas" width="240" height="240"></canvas>
     <div class="watermark">Amang</div>
     <div class="game-name">Snake Game - Amang</div>
+    <div id="gameOverMessage" class="game-over">Game Over!</div>
 
     <script>
         const canvas = document.getElementById('snakeCanvas');
         const ctx = canvas.getContext('2d');
+        const gameOverMessage = document.getElementById('gameOverMessage');
 
         // Snake initialization
         const snakeSize = 20;
@@ -103,16 +126,14 @@
         function gameLoop() {
             update();
             draw();
-            requestAnimationFrame(gameLoop);
+
+            if (!gameOverMessage.style.display) {
+                requestAnimationFrame(gameLoop);
+            }
         }
 
         function gameOver() {
-            alert('Game Over!');
-            // Reset the game state
-            snake = Array.from({ length: initialSnakeLength }, (_, i) => ({ x: i * snakeSize, y: 0 }));
-            food = { x: 120, y: 120 };
-            dx = snakeSize;
-            dy = 0;
+            gameOverMessage.style.display = 'block';
         }
 
         // Keyboard input for controlling the snake
@@ -146,7 +167,7 @@
         });
 
         // Start the game loop
-        gameLoop();
+        requestAnimationFrame(gameLoop);
     </script>
 </body>
 </html>
