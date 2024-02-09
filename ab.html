@@ -28,10 +28,18 @@
             border: 1px solid #ccc;
             cursor: pointer;
         }
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
     <div id="gameBoard"></div>
+    <div class="watermark">Your Watermark Here</div>
 
     <script>
         // Define an array of card symbols
