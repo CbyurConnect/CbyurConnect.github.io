@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hill Racing: Climb Legend</title>
+    <title>Hill Racing</title>
     <style>
         body {
             margin: 0;
@@ -22,51 +22,104 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Car properties
+        // Game settings
         const carWidth = 40;
         const carHeight = 20;
         let carX = canvas.width / 2 - carWidth / 2;
         let carY = canvas.height - carHeight - 10;
+        let carSpeed = 5;
 
-        // Hill properties
         const hillHeight = 100;
-        const hillWidth = canvas.width;
+        const hillWidth = 150;
         const hillColor = '#8B4513';
+        const hills = [];
+
+        let gameMode = 'easy'; // Default game mode
 
         // Game loop
         function gameLoop() {
-            // Clear the canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw the hill
-            ctx.fillStyle = hillColor;
-            ctx.fillRect(0, canvas.height - hillHeight, hillWidth, hillHeight);
+            drawBackground();
+            drawHills();
+            drawCar();
 
-            // Draw the car
-            ctx.fillStyle = '#00F';
-            ctx.fillRect(carX, carY, carWidth, carHeight);
-
+            moveCar();
             requestAnimationFrame(gameLoop);
         }
 
-        // Handle key events
-        window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('keyup', handleKeyUp);
+        function drawBackground() {
+            ctx.fillStyle = '#87CEEB'; // Sky blue
+            ctx.fillRect(0, 0, canvas.width, canvas.height - hillHeight);
 
-        function handleKeyDown(event) {
-            if (event.key === 'ArrowUp' && carY > canvas.height - hillHeight - carHeight) {
-                carY -= 5;
-            } else if (event.key === 'ArrowDown' && carY < canvas.height - carHeight) {
-                carY += 5;
+            ctx.fillStyle = '#2E8B57'; // Green for ground
+            ctx.fillRect(0, canvas.height - hillHeight, canvas.width, hillHeight);
+        }
+
+        function drawHills() {
+            hills.forEach(hill => {
+                ctx.fillStyle = hill.color;
+                ctx.beginPath();
+                ctx.moveTo(hill.x, hill.y);
+                ctx.lineTo(hill.x + hill.width / 2, hill.y - hill.height);
+                ctx.lineTo(hill.x + hill.width, hill.y);
+                ctx.closePath();
+                ctx.fill();
+            });
+        }
+
+        function drawCar() {
+            ctx.fillStyle = '#00F';
+            ctx.fillRect(carX, carY, carWidth, carHeight);
+        }
+
+        function moveCar() {
+            window.addEventListener('keydown', handleKeyDown);
+            window.addEventListener('keyup', handleKeyUp);
+
+            function handleKeyDown(event) {
+                if (event.key === 'ArrowRight' && carX < canvas.width - carWidth) {
+                    carX += carSpeed;
+                } else if (event.key === 'ArrowLeft' && carX > 0) {
+                    carX -= carSpeed;
+                } else if (event.key === '1') {
+                    setGameMode('easy');
+                } else if (event.key === '2') {
+                    setGameMode('medium');
+                } else if (event.key === '3') {
+                    setGameMode('hard');
+                }
+            }
+
+            function handleKeyUp(event) {
+                // Add additional handling for key releases if needed
             }
         }
 
-        function handleKeyUp(event) {
-            // Add additional handling for key releases if needed
+        function setGameMode(mode) {
+            gameMode = mode;
+
+            switch (gameMode) {
+                case 'easy':
+                    hills.length = 1;
+                    hills[0] = { x: 50, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
+                    break;
+                case 'medium':
+                    hills.length = 2;
+                    hills[0] = { x: 50, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
+                    hills[1] = { x: 200, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
+                    break;
+                case 'hard':
+                    hills.length = 3;
+                    hills[0] = { x: 50, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
+                    hills[1] = { x: 200, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
+                    hills[2] = { x: 350, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
+                    break;
+            }
         }
 
-        // Start the game loop
-        gameLoop();
+        setGameMode(gameMode); // Initialize hills based on the default mode
+        gameLoop(); // Start the game loop
     </script>
 </body>
 </html>
