@@ -3,173 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hill Racing</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
-        canvas {
-            display: block;
-            margin: 0 auto;
-            background-color: #87CEEB; /* Sky blue */
-        }
-    </style>
+    <title>Car Racing</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.1/dist/phaser.js"></script>
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
 
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Game settings
-        const carWidth = 40;
-        const carHeight = 20;
-        let carX = canvas.width / 2 - carWidth / 2;
-        let carY = canvas.height - carHeight - 10;
-        let carSpeed = 5;
-
-        const hillHeight = 100;
-        const hillWidth = 150;
-        const hillColor = '#8B4513';
-        let hills = [];
-        let level = 1;
-
-        // Set up the canvas size on load
-        window.addEventListener('load', setupCanvas);
-
-        function setupCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // Initialize hills based on the default mode
-            generateHills();
-
-            // Start the game loop
-            gameLoop();
-        }
-
-        window.addEventListener('resize', setupCanvas);
-
-        // Game loop
-        function gameLoop() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            drawBackground();
-            drawHills();
-            drawCar();
-
-            moveCar();
-            checkCollision();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function drawBackground() {
-            ctx.fillStyle = '#2E8B57'; /* Green for ground */
-            ctx.fillRect(0, canvas.height - hillHeight, canvas.width, hillHeight);
-        }
-
-        function drawHills() {
-            hills.forEach(hill => {
-                ctx.fillStyle = hill.color;
-                ctx.beginPath();
-                ctx.moveTo(hill.x, hill.y);
-                ctx.lineTo(hill.x + hill.width / 2, hill.y - hill.height);
-                ctx.lineTo(hill.x + hill.width, hill.y);
-                ctx.closePath();
-                ctx.fill();
-            });
-        }
-
-        function drawCar() {
-            ctx.fillStyle = '#00F';
-            ctx.fillRect(carX, carY, carWidth, carHeight);
-        }
-
-        function moveCar() {
-            window.addEventListener('keydown', handleKeyDown);
-            window.addEventListener('keyup', handleKeyUp);
-
-            function handleKeyDown(event) {
-                if (event.key === 'ArrowRight' && carX < canvas.width - carWidth) {
-                    carX += carSpeed;
-                } else if (event.key === 'ArrowLeft' && carX > 0) {
-                    carX -= carSpeed;
-                }
+<script>
+    const config = {
+        type: Phaser.AUTO,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 0 },
+                debug: false
             }
-
-            function handleKeyUp(event) {
-                // Add additional handling for key releases if needed
-            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
         }
+    };
 
-        function generateHills() {
-            hills = [];
-            const numHills = level + 1; // Increase the number of hills with each level
+    const game = new Phaser.Game(config);
 
-            for (let i = 0; i < numHills; i++) {
-                const x = Math.random() * (canvas.width - hillWidth);
-                const y = canvas.height - hillHeight;
-                hills.push({ x, y, width: hillWidth, height: hillHeight, color: hillColor });
-            }
+    function preload() {
+        this.load.image('car', 'car.png'); // Replace with your car image
+    }
+
+    function create() {
+        this.car = this.physics.add.image(config.width / 2, config.height - 80, 'car');
+        this.car.setCollideWorldBounds(true);
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+    }
+
+    function update() {
+        if (this.cursors.left.isDown && this.car.x > 0) {
+            this.car.setVelocityX(-160);
+        } else if (this.cursors.right.isDown && this.car.x < config.width - 50) {
+            this.car.setVelocityX(160);
+        } else {
+            this.car.setVelocityX(0);
         }
+    }
+</script>
 
-        function checkCollision() {
-            // Check if the car collides with any hill
-            for (const hill of hills) {
-                if (
-                    carX < hill.x + hill.width &&
-                    carX + carWidth > hill.x &&
-                    carY < hill.y &&
-                    carY + carHeight > hill.y - hill.height
-                ) {
-                    // Collision detected, reset the game or take appropriate action
-                    resetGame();
-                }
-            }
-        }
-
-        function resetGame() {
-            level = 1;
-            generateHills();
-            carX = canvas.width / 2 - carWidth / 2;
-            carY = canvas.height - carHeight - 10;
-        }
-
-        function levelUp() {
-            level++;
-            generateHills();
-        }
-
-        // Initialize the game
-        generateHills();
-    </script>
-
-    <!-- Chat container -->
-    <div id="chat-container">
-        <div id="chat-messages"></div>
-        <input type="text" id="message-input" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
-    
-    <!-- JavaScript for messaging functionality -->
-    <script>
-        function sendMessage() {
-            var messageInput = document.getElementById('message-input');
-            var message = messageInput.value;
-
-            if (message.trim() !== '') {
-                var chatMessages = document.getElementById('chat-messages');
-                var newMessage = document.createElement('div');
-                newMessage.textContent = message;
-                chatMessages.appendChild(newMessage);
-
-                // Clear the input field after sending the message
-                messageInput.value = '';
-            }
-        }
-    </script>
 </body>
 </html>
