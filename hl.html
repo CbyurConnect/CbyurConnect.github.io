@@ -12,6 +12,8 @@
 
         canvas {
             display: block;
+            margin: 0 auto;
+            background-color: #87CEEB; /* Sky blue */
         }
     </style>
 </head>
@@ -32,9 +34,24 @@
         const hillHeight = 100;
         const hillWidth = 150;
         const hillColor = '#8B4513';
-        const hills = [];
+        let hills = [];
+        let level = 1;
 
-        let gameMode = 'easy'; // Default game mode
+        // Set up the canvas size on load
+        window.addEventListener('load', setupCanvas);
+
+        function setupCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Initialize hills based on the default mode
+            generateHills();
+
+            // Start the game loop
+            gameLoop();
+        }
+
+        window.addEventListener('resize', setupCanvas);
 
         // Game loop
         function gameLoop() {
@@ -45,14 +62,12 @@
             drawCar();
 
             moveCar();
+            checkCollision();
             requestAnimationFrame(gameLoop);
         }
 
         function drawBackground() {
-            ctx.fillStyle = '#87CEEB'; // Sky blue
-            ctx.fillRect(0, 0, canvas.width, canvas.height - hillHeight);
-
-            ctx.fillStyle = '#2E8B57'; // Green for ground
+            ctx.fillStyle = '#2E8B57'; /* Green for ground */
             ctx.fillRect(0, canvas.height - hillHeight, canvas.width, hillHeight);
         }
 
@@ -82,12 +97,6 @@
                     carX += carSpeed;
                 } else if (event.key === 'ArrowLeft' && carX > 0) {
                     carX -= carSpeed;
-                } else if (event.key === '1') {
-                    setGameMode('easy');
-                } else if (event.key === '2') {
-                    setGameMode('medium');
-                } else if (event.key === '3') {
-                    setGameMode('hard');
                 }
             }
 
@@ -96,30 +105,71 @@
             }
         }
 
-        function setGameMode(mode) {
-            gameMode = mode;
+        function generateHills() {
+            hills = [];
+            const numHills = level + 1; // Increase the number of hills with each level
 
-            switch (gameMode) {
-                case 'easy':
-                    hills.length = 1;
-                    hills[0] = { x: 50, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
-                    break;
-                case 'medium':
-                    hills.length = 2;
-                    hills[0] = { x: 50, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
-                    hills[1] = { x: 200, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
-                    break;
-                case 'hard':
-                    hills.length = 3;
-                    hills[0] = { x: 50, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
-                    hills[1] = { x: 200, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
-                    hills[2] = { x: 350, y: canvas.height - hillHeight, width: hillWidth, height: hillHeight, color: hillColor };
-                    break;
+            for (let i = 0; i < numHills; i++) {
+                const x = Math.random() * (canvas.width - hillWidth);
+                const y = canvas.height - hillHeight;
+                hills.push({ x, y, width: hillWidth, height: hillHeight, color: hillColor });
             }
         }
 
-        setGameMode(gameMode); // Initialize hills based on the default mode
-        gameLoop(); // Start the game loop
+        function checkCollision() {
+            // Check if the car collides with any hill
+            for (const hill of hills) {
+                if (
+                    carX < hill.x + hill.width &&
+                    carX + carWidth > hill.x &&
+                    carY < hill.y &&
+                    carY + carHeight > hill.y - hill.height
+                ) {
+                    // Collision detected, reset the game or take appropriate action
+                    resetGame();
+                }
+            }
+        }
+
+        function resetGame() {
+            level = 1;
+            generateHills();
+            carX = canvas.width / 2 - carWidth / 2;
+            carY = canvas.height - carHeight - 10;
+        }
+
+        function levelUp() {
+            level++;
+            generateHills();
+        }
+
+        // Initialize the game
+        generateHills();
+    </script>
+
+    <!-- Chat container -->
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <input type="text" id="message-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    
+    <!-- JavaScript for messaging functionality -->
+    <script>
+        function sendMessage() {
+            var messageInput = document.getElementById('message-input');
+            var message = messageInput.value;
+
+            if (message.trim() !== '') {
+                var chatMessages = document.getElementById('chat-messages');
+                var newMessage = document.createElement('div');
+                newMessage.textContent = message;
+                chatMessages.appendChild(newMessage);
+
+                // Clear the input field after sending the message
+                messageInput.value = '';
+            }
+        }
     </script>
 </body>
 </html>
