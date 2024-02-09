@@ -27,7 +27,17 @@
             background-color: #fff;
             border: 1px solid #ccc;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
         }
+
+        .flipped {
+            background-color: #ccc; /* Add styling for flipped state */
+        }
+
         .watermark {
             position: absolute;
             bottom: 10px;
@@ -76,7 +86,7 @@
 
         function checkMatch() {
             const [card1, card2] = flippedCards;
-            
+
             if (card1.textContent === card2.textContent) {
                 card1.removeEventListener('click', flipCard);
                 card2.removeEventListener('click', flipCard);
