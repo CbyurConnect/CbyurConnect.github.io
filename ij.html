@@ -43,6 +43,10 @@
         const ballSize = 10;
         const ball = { x: canvas.width / 2, y: canvas.height / 2, dx: 4, dy: 4 };
 
+        // Score
+        let leftScore = 0;
+        let rightScore = 0;
+
         function drawPaddle(x, y) {
             ctx.fillStyle = '#fff';
             ctx.fillRect(x, y, paddleWidth, paddleHeight);
@@ -55,6 +59,12 @@
             ctx.fill();
         }
 
+        function drawScores() {
+            ctx.fillStyle = '#fff';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Score: ${leftScore} - ${rightScore}`, canvas.width / 2 - 70, 20);
+        }
+
         function draw() {
             // Clear the canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -65,6 +75,9 @@
 
             // Draw the ball
             drawBall();
+
+            // Draw scores
+            drawScores();
         }
 
         function update() {
@@ -98,14 +111,22 @@
             }
 
             // Ball out of bounds (scoring)
-            if (ball.x - ballSize < 0 || ball.x + ballSize > canvas.width) {
-                // Reset ball position
-                ball.x = canvas.width / 2;
-                ball.y = canvas.height / 2;
-
-                // Reverse ball direction
-                ball.dx = -ball.dx;
+            if (ball.x - ballSize < 0) {
+                // Right player scores
+                rightScore++;
+                resetBall();
+            } else if (ball.x + ballSize > canvas.width) {
+                // Left player scores
+                leftScore++;
+                resetBall();
             }
+        }
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = 4;
+            ball.dy = 4;
         }
 
         function gameLoop() {
