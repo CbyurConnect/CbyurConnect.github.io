@@ -23,15 +23,35 @@
             color: rgba(0, 0, 0, 0.3);
             font-size: 14px;
         }
+        .score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #333;
+            font-size: 20px;
+        }
+        .game-name {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #333;
+            font-size: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <canvas id="breakoutCanvas" width="480" height="320"></canvas>
     <div class="watermark">Amang</div>
+    <div class="score">Score: 0</div>
+    <div class="game-name">Breakout Game</div>
 
     <script>
         const canvas = document.getElementById('breakoutCanvas');
         const ctx = canvas.getContext('2d');
+
+        let score = 0;
 
         // Paddle, ball, and bricks initialization code here
         const paddleWidth = 80;
@@ -74,6 +94,7 @@
             moveBall();
             handleCollisions();
             checkGameOver();
+            updateScore();
         }
 
         function movePaddle() {
@@ -101,6 +122,7 @@
             // Bounce off paddle
             if (ballY + ballRadius > canvas.height - paddleHeight && ballX > paddleX && ballX < paddleX + paddleWidth) {
                 ballSpeedY = -ballSpeedY;
+                score++; // Increase score when ball hits the paddle
             }
         }
 
@@ -135,6 +157,10 @@
             }
         }
 
+        function updateScore() {
+            document.querySelector('.score').textContent = 'Score: ' + score;
+        }
+
         function gameLoop() {
             update();
             draw();
@@ -146,4 +172,3 @@
     </script>
 </body>
 </html>
- 
