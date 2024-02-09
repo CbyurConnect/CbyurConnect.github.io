@@ -27,6 +27,7 @@
 <body>
     <canvas id="flappyCanvas" width="480" height="320"></canvas>
     <div class="watermark">Amang</div>
+    <div class="game-name">Snake Game - Amang</div>
 
     <script>
         const canvas = document.getElementById('flappyCanvas');
@@ -38,13 +39,13 @@
             width: 30,
             height: 30,
             velocityY: 0,
-            gravity: 0.5,
-            jumpStrength: 10,
+            gravity: 0.3, // Decreased gravity for slower movement
+            jumpStrength: 7, // Decreased jump strength
         };
 
         const pipes = [];
         const pipeWidth = 50;
-        const pipeGap = 150;
+        const pipeGap = 200; // Increased space between pillars
         let gameInterval;
 
         document.addEventListener('keydown', function (event) {
@@ -70,8 +71,8 @@
 
         function drawPipe(pipe) {
             ctx.fillStyle = '#008000'; // Green color
-            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.height);
-            ctx.fillRect(pipe.x, pipe.height + pipeGap, pipeWidth, canvas.height - pipe.height - pipeGap);
+            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
+            ctx.fillRect(pipe.x, pipe.bottomY, pipeWidth, pipe.bottomHeight);
         }
 
         function updatePipes() {
@@ -86,7 +87,7 @@
                 if (
                     bird.x < pipes[i].x + pipeWidth &&
                     bird.x + bird.width > pipes[i].x &&
-                    (bird.y < pipes[i].height || bird.y + bird.height > pipes[i].height + pipeGap)
+                    (bird.y < pipes[i].topHeight || bird.y + bird.height > pipes[i].bottomY)
                 ) {
                     clearInterval(gameInterval);
                     alert('Game Over! Refresh the page to play again.');
@@ -96,7 +97,10 @@
             // Add new pipes periodically
             if (Math.random() < 0.02) {
                 const pipeHeight = Math.random() * (canvas.height - pipeGap);
-                pipes.push({ x: canvas.width, height: pipeHeight });
+                const topHeight = pipeHeight;
+                const bottomY = pipeHeight + pipeGap;
+                const bottomHeight = canvas.height - bottomY;
+                pipes.push({ x: canvas.width, topHeight, bottomY, bottomHeight });
             }
         }
 
