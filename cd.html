@@ -32,24 +32,99 @@
         const canvas = document.getElementById('flappyCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Bird and pipe initialization code here
+        const bird = {
+            x: 50,
+            y: canvas.height / 2 - 15,
+            width: 30,
+            height: 30,
+            velocityY: 0,
+            gravity: 0.5,
+            jumpStrength: 10,
+        };
+
+        const pipes = [];
+        const pipeWidth = 50;
+        const pipeGap = 150;
+        let gameInterval;
+
+        document.addEventListener('keydown', function (event) {
+            if (event.code === 'Space') {
+                bird.velocityY = -bird.jumpStrength;
+            }
+        });
+
+        function drawBird() {
+            ctx.fillStyle = '#FFD700'; // Yellow color
+            ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+        }
+
+        function updateBird() {
+            bird.velocityY += bird.gravity;
+            bird.y += bird.velocityY;
+
+            if (bird.y > canvas.height - bird.height) {
+                bird.y = canvas.height - bird.height;
+                bird.velocityY = 0;
+            }
+        }
+
+        function drawPipe(pipe) {
+            ctx.fillStyle = '#008000'; // Green color
+            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.height);
+            ctx.fillRect(pipe.x, pipe.height + pipeGap, pipeWidth, canvas.height - pipe.height - pipeGap);
+        }
+
+        function updatePipes() {
+            for (let i = pipes.length - 1; i >= 0; i--) {
+                pipes[i].x -= 2;
+
+                if (pipes[i].x + pipeWidth < 0) {
+                    pipes.splice(i, 1);
+                }
+
+                // Check for collision with pipes
+                if (
+                    bird.x < pipes[i].x + pipeWidth &&
+                    bird.x + bird.width > pipes[i].x &&
+                    (bird.y < pipes[i].height || bird.y + bird.height > pipes[i].height + pipeGap)
+                ) {
+                    clearInterval(gameInterval);
+                    alert('Game Over! Refresh the page to play again.');
+                }
+            }
+
+            // Add new pipes periodically
+            if (Math.random() < 0.02) {
+                const pipeHeight = Math.random() * (canvas.height - pipeGap);
+                pipes.push({ x: canvas.width, height: pipeHeight });
+            }
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
         function draw() {
-            // Drawing code here
+            clearCanvas();
+            drawBird();
+
+            for (const pipe of pipes) {
+                drawPipe(pipe);
+            }
         }
 
         function update() {
-            // Update code here
+            updateBird();
+            updatePipes();
         }
 
         function gameLoop() {
             update();
             draw();
-            requestAnimationFrame(gameLoop);
         }
 
         // Start the game loop
-        gameLoop();
+        gameInterval = setInterval(gameLoop, 16); // Run the game loop approximately every 16 milliseconds
     </script>
 </body>
 </html>
