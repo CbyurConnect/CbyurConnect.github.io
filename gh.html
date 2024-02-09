@@ -14,7 +14,9 @@
             display: block;
             margin: 0 auto;
             background-color: #2E8B57; /* Green background */
+            border: 1px solid #000;
         }
+
         .watermark {
             position: absolute;
             bottom: 10px;
@@ -32,14 +34,66 @@
         const canvas = document.getElementById('snakeCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Snake initialization code here
+        // Snake initialization
+        const snakeSize = 20;
+        let snake = [{ x: 100, y: 100 }];
+        let dx = snakeSize;
+        let dy = 0;
 
-        function draw() {
-            // Drawing code here
+        // Food initialization
+        let food = { x: 200, y: 200 };
+
+        function drawSnake() {
+            ctx.fillStyle = '#FFFFFF'; // White color for the snake
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x, segment.y, snakeSize, snakeSize);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = '#FF0000'; // Red color for the food
+            ctx.fillRect(food.x, food.y, snakeSize, snakeSize);
         }
 
         function update() {
-            // Update code here
+            // Move the snake
+            const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            snake.unshift(head);
+
+            // Check if the snake eats the food
+            if (head.x === food.x && head.y === food.y) {
+                // Generate new food at random position
+                food = {
+                    x: Math.floor(Math.random() * canvas.width / snakeSize) * snakeSize,
+                    y: Math.floor(Math.random() * canvas.height / snakeSize) * snakeSize
+                };
+            } else {
+                // Remove the tail if the snake didn't eat the food
+                snake.pop();
+            }
+
+            // Check for collisions with the walls
+            if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+                gameOver();
+            }
+
+            // Check for collisions with itself
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                }
+            }
+        }
+
+        function draw() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the snake
+            drawSnake();
+
+            // Draw the food
+            drawFood();
         }
 
         function gameLoop() {
@@ -47,6 +101,37 @@
             draw();
             requestAnimationFrame(gameLoop);
         }
+
+        function gameOver() {
+            alert('Game Over!');
+            // Reset the game state
+            snake = [{ x: 100, y: 100 }];
+            food = { x: 200, y: 200 };
+            dx = snakeSize;
+            dy = 0;
+        }
+
+        // Keyboard input for controlling the snake
+        window.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    dx = 0;
+                    dy = -snakeSize;
+                    break;
+                case 'ArrowDown':
+                    dx = 0;
+                    dy = snakeSize;
+                    break;
+                case 'ArrowLeft':
+                    dx = -snakeSize;
+                    dy = 0;
+                    break;
+                case 'ArrowRight':
+                    dx = snakeSize;
+                    dy = 0;
+                    break;
+            }
+        });
 
         // Start the game loop
         gameLoop();
