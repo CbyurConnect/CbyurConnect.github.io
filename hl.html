@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hill Racing: Climb Legend</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Car properties
+        const carWidth = 40;
+        const carHeight = 20;
+        let carX = canvas.width / 2 - carWidth / 2;
+        let carY = canvas.height - carHeight - 10;
+
+        // Hill properties
+        const hillHeight = 100;
+        const hillWidth = canvas.width;
+        const hillColor = '#8B4513';
+
+        // Game loop
+        function gameLoop() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the hill
+            ctx.fillStyle = hillColor;
+            ctx.fillRect(0, canvas.height - hillHeight, hillWidth, hillHeight);
+
+            // Draw the car
+            ctx.fillStyle = '#00F';
+            ctx.fillRect(carX, carY, carWidth, carHeight);
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Handle key events
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+
+        function handleKeyDown(event) {
+            if (event.key === 'ArrowUp' && carY > canvas.height - hillHeight - carHeight) {
+                carY -= 5;
+            } else if (event.key === 'ArrowDown' && carY < canvas.height - carHeight) {
+                carY += 5;
+            }
+        }
+
+        function handleKeyUp(event) {
+            // Add additional handling for key releases if needed
+        }
+
+        // Start the game loop
+        gameLoop();
+    </script>
+</body>
+</html>
