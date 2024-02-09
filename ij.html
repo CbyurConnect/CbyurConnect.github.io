@@ -15,10 +15,18 @@
             margin: 0 auto;
             background-color: #000; /* Black background */
         }
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
     <canvas id="pongCanvas" width="800" height="400"></canvas>
+    <div class="watermark">Amang</div>
 
     <script>
         const canvas = document.getElementById('pongCanvas');
