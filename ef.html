@@ -16,38 +16,40 @@
             margin: 0 auto;
             background-color: #eee; /* Light gray background */
             border: 1px solid #ccc;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .watermark,
-        .score,
-        .highest-score,
-        .game-name {
-            position: absolute;
-            color: #333;
-            font-size: 16px;
         }
 
         .watermark {
-            bottom: 5px;
-            right: 5px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 14px;
         }
 
         .score {
+            position: absolute;
             top: 10px;
             left: 10px;
+            color: #333;
+            font-size: 20px;
         }
 
         .highest-score {
+            position: absolute;
             top: 10px;
             right: 10px;
+            color: #333;
+            font-size: 20px;
         }
 
         .game-name {
+            position: absolute;
             top: 10px;
             left: 50%;
             transform: translateX(-50%);
+            color: #333;
+            font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -78,11 +80,15 @@
         let score = 0;
         let highestScore = localStorage.getItem('highestScore') || 0;
 
+        // Highest score position
+        let highestScoreX = canvas.width - 130;
+
         function draw() {
             // Drawing code here
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawPaddle();
             drawBall();
+            drawScores();
         }
 
         function drawPaddle() {
@@ -99,6 +105,13 @@
             ctx.fillStyle = "#0095DD";
             ctx.fill();
             ctx.closePath();
+        }
+
+        function drawScores() {
+            ctx.fillStyle = '#333';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 30);
+            ctx.fillText(`Highest Score: ${highestScore}`, highestScoreX, 30);
         }
 
         function update() {
@@ -154,29 +167,7 @@
             if (score > highestScore) {
                 highestScore = score;
                 localStorage.setItem('highestScore', highestScore);
-                updateHighestScore();
             }
-            updateScore();
-        }
-
-        function updateScore() {
-            document.querySelector('.score').textContent = 'Score: ' + score;
-        }
-
-        function updateHighestScore() {
-            document.querySelector('.highest-score').textContent = 'Highest Score: ' + highestScore;
-        }
-
-        function resetGame() {
-            if (score > highestScore) {
-                highestScore = score;
-                localStorage.setItem('highestScore', highestScore);
-                updateHighestScore();
-            }
-            score = 0;
-            updateScore();
-            ballX = canvas.width / 2;
-            ballY = canvas.height - paddleHeight - ballRadius;
         }
 
         // Keyboard input handling
