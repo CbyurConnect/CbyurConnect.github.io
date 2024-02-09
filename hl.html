@@ -29,27 +29,94 @@
 
     const game = new Phaser.Game(config);
 
+    let car;
+    let obstacles;
+    let score = 0;
+    let scoreText;
+
     function preload() {
-        this.load.image('car', 'car.png'); // Replace with your car image
+        this.load.image('car', 'car.png');
+        this.load.image('obstacle', 'obstacle.png'); // Replace with your obstacle image
     }
 
     function create() {
-        this.car = this.physics.add.image(config.width / 2, config.height - 80, 'car');
-        this.car.setCollideWorldBounds(true);
+        car = this.physics.add.image(config.width / 2, config.height - 80, 'car');
+        car.setCollideWorldBounds(true);
 
-        this.cursors = this.input.keyboard.createCursorKeys();
+        obstacles = this.physics.add.group({
+            key: 'obstacle',
+            repeat: 5, // Adjust the number of obstacles
+            setXY: { x: 50, y: -100, stepX: 100 }
+        });
+
+        this.physics.add.collider(car, obstacles, handleCollision, null, this);
+
+        scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+
+        this.input.keyboard.on('keydown-R', function (event) {
+            resetGame();
+        });
     }
 
     function update() {
-        if (this.cursors.left.isDown && this.car.x > 0) {
-            this.car.setVelocityX(-160);
-        } else if (this.cursors.right.isDown && this.car.x < config.width - 50) {
-            this.car.setVelocityX(160);
-        } else {
-            this.car.setVelocityX(0);
+        if (car.active) {
+            if (score % 50 === 0) {
+                obstacles.setVelocityY(150); // Increase obstacle speed every 50 points
+            }
+
+            if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))) {
+                car.setVelocityY(-300); // Jump when the space key is pressed
+            }
+
+            if (this.input.activePointer.isDown) {
+                if (this.input.activePointer.x < config.width / 2 && car.x > 0) {
+                    car.setVelocityX(-160); // Move left when tapping on the left side of the screen
+                } else if (this.input.activePointer.x >= config.width / 2 && car.x < config.width - 50) {
+                    car.setVelocityX(160); // Move right when tapping on the right side of the screen
+                } else {
+                    car.setVelocityX(0);
+                }
+            } else {
+                car.setVelocityX(0);
+            }
+
+            obstacles.children.iterate(function (obstacle) {
+                if (obstacle.y > config.height) {
+                    obstacle.y = -100;
+                    obstacle.x = Phaser.Math.Between(50, config.width - 50);
+                    score += 10;
+                    scoreText.setText('Score: ' + score);
+                }
+            });
         }
     }
+
+    function handleCollision(car, obstacle) {
+        car.setTint(0xff0000);
+        car.active = false;
+        gameOver();
+    }
+
+    function gameOver() {
+        this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'Game Over', { fontSize: '32px', fill: '#fff' });
+        this.add.text(config.width / 2 - 100, config.height / 2 + 10, 'Press R to Restart', { fontSize: '20px', fill: '#fff' });
+    }
+
+    function resetGame() {
+        car.clearTint();
+        car.setActive(true).setVisible(true);
+        car.x = config.width / 2;
+        car.y = config.height - 80;
+
+        obstacles.children.iterate(function (obstacle) {
+            obstacle.y = -100;
+            obstacle.x = Phaser.Math.Between(50, config.width - 50);
+        });
+
+        score = 0;
+        scoreText.setText('Score: ' + score);
+    }
 </script>
-    
+
 </body>
 </html>
