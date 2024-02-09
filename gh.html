@@ -8,12 +8,14 @@
         body {
             margin: 0;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2E8B57; /* Green background */
         }
 
         canvas {
-            display: block;
-            margin: 0 auto;
-            background-color: #2E8B57; /* Green background */
             border: 1px solid #000;
         }
 
@@ -27,7 +29,7 @@
     </style>
 </head>
 <body>
-    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    <canvas id="snakeCanvas" width="240" height="240"></canvas>
     <div class="watermark">Your Watermark Here</div>
 
     <script>
@@ -36,15 +38,16 @@
 
         // Snake initialization
         const snakeSize = 20;
-        let snake = [{ x: 100, y: 100 }];
+        const initialSnakeLength = 3; // Initial snake length
+        let snake = Array.from({ length: initialSnakeLength }, (_, i) => ({ x: i * snakeSize, y: 0 }));
         let dx = snakeSize;
         let dy = 0;
 
         // Food initialization
-        let food = { x: 200, y: 200 };
+        let food = { x: 120, y: 120 };
 
         function drawSnake() {
-            ctx.fillStyle = '#FFFFFF'; // White color for the snake
+            ctx.fillStyle = '#00FF00'; // Green color for the snake
             snake.forEach(segment => {
                 ctx.fillRect(segment.x, segment.y, snakeSize, snakeSize);
             });
@@ -64,8 +67,8 @@
             if (head.x === food.x && head.y === food.y) {
                 // Generate new food at random position
                 food = {
-                    x: Math.floor(Math.random() * canvas.width / snakeSize) * snakeSize,
-                    y: Math.floor(Math.random() * canvas.height / snakeSize) * snakeSize
+                    x: Math.floor(Math.random() * (canvas.width / snakeSize)) * snakeSize,
+                    y: Math.floor(Math.random() * (canvas.height / snakeSize)) * snakeSize
                 };
             } else {
                 // Remove the tail if the snake didn't eat the food
@@ -105,8 +108,8 @@
         function gameOver() {
             alert('Game Over!');
             // Reset the game state
-            snake = [{ x: 100, y: 100 }];
-            food = { x: 200, y: 200 };
+            snake = Array.from({ length: initialSnakeLength }, (_, i) => ({ x: i * snakeSize, y: 0 }));
+            food = { x: 120, y: 120 };
             dx = snakeSize;
             dy = 0;
         }
@@ -115,20 +118,28 @@
         window.addEventListener('keydown', (e) => {
             switch (e.key) {
                 case 'ArrowUp':
-                    dx = 0;
-                    dy = -snakeSize;
+                    if (dy !== snakeSize) { // Avoid moving into opposite direction
+                        dx = 0;
+                        dy = -snakeSize;
+                    }
                     break;
                 case 'ArrowDown':
-                    dx = 0;
-                    dy = snakeSize;
+                    if (dy !== -snakeSize) {
+                        dx = 0;
+                        dy = snakeSize;
+                    }
                     break;
                 case 'ArrowLeft':
-                    dx = -snakeSize;
-                    dy = 0;
+                    if (dx !== snakeSize) {
+                        dx = -snakeSize;
+                        dy = 0;
+                    }
                     break;
                 case 'ArrowRight':
-                    dx = snakeSize;
-                    dy = 0;
+                    if (dx !== -snakeSize) {
+                        dx = snakeSize;
+                        dy = 0;
+                    }
                     break;
             }
         });
