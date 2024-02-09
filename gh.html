@@ -15,10 +15,18 @@
             margin: 0 auto;
             background-color: #2E8B57; /* Green background */
         }
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
     <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    <div class="watermark">Your Watermark Here</div>
 
     <script>
         const canvas = document.getElementById('snakeCanvas');
