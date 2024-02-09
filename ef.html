@@ -30,6 +30,13 @@
             color: #333;
             font-size: 20px;
         }
+        .highest-score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #333;
+            font-size: 20px;
+        }
         .game-name {
             position: absolute;
             top: 10px;
@@ -45,6 +52,7 @@
     <canvas id="breakoutCanvas" width="480" height="320"></canvas>
     <div class="watermark">Amang</div>
     <div class="score">Score: 0</div>
+    <div class="highest-score">Highest Score: 0</div>
     <div class="game-name">Breakout Game</div>
 
     <script>
@@ -64,6 +72,7 @@
         let ballSpeedY = -2;
 
         let score = 0;
+        let highestScore = localStorage.getItem('highestScore') || 0;
 
         function draw() {
             // Drawing code here
@@ -131,15 +140,39 @@
 
         function checkGameOver() {
             // Implement game over conditions (e.g., when the ball goes below the paddle)
+            if (ballY + ballRadius > canvas.height) {
+                resetGame();
+            }
         }
 
         function increaseScore() {
             score++;
+            if (score > highestScore) {
+                highestScore = score;
+                localStorage.setItem('highestScore', highestScore);
+                updateHighestScore();
+            }
             updateScore();
         }
 
         function updateScore() {
             document.querySelector('.score').textContent = 'Score: ' + score;
+        }
+
+        function updateHighestScore() {
+            document.querySelector('.highest-score').textContent = 'Highest Score: ' + highestScore;
+        }
+
+        function resetGame() {
+            if (score > highestScore) {
+                highestScore = score;
+                localStorage.setItem('highestScore', highestScore);
+                updateHighestScore();
+            }
+            score = 0;
+            updateScore();
+            ballX = canvas.width / 2;
+            ballY = canvas.height - paddleHeight - ballRadius;
         }
 
         // Keyboard input handling
